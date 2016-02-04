@@ -14,7 +14,7 @@ public class FilmesApplication extends Application {
     public void onCreate() {
 
         super.onCreate();
-        initializeInjector();
+        initializeInjector(); 
     }
 
     private void initializeInjector() {
