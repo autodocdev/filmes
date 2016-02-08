@@ -6,7 +6,7 @@ import diones.filmes.com.filmes.injector.AppModule;
 import diones.filmes.com.filmes.injector.components.AppComponent;
 import diones.filmes.com.filmes.injector.components.DaggerAppComponent;
 
-public class FilmesApplication extends Application {
+public class MoviesApplication extends Application {
 
     private AppComponent mAppComponent;
 
@@ -14,7 +14,7 @@ public class FilmesApplication extends Application {
     public void onCreate() {
 
         super.onCreate();
-        initializeInjector(); 
+        initializeInjector();
     }
 
     private void initializeInjector() {

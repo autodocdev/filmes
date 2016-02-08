@@ -5,13 +5,13 @@ import android.content.Context;
 import dagger.Component;
 import diones.filmes.com.filmes.injector.Activity;
 import diones.filmes.com.filmes.injector.modules.ActivityModule;
-import diones.filmes.com.filmes.views.activities.FilmeActivity;
+import diones.filmes.com.filmes.views.activities.MainActivity;
 
 @Activity
 @Component(dependencies = AppComponent.class, modules = {ActivityModule.class})
-public interface FilmesComponent extends ActivityComponent {
+public interface MoviesComponent extends ActivityComponent {
 
-    void inject (FilmeActivity activity);
+    void inject (MainActivity activity);
 
     Context activityContext();
 

@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,21 +28,23 @@ import butterknife.ButterKnife;
 import diones.filmes.com.filmes.FilmesApplication;
 import diones.filmes.com.filmes.injector.components.DaggerFilmesComponent;
 import diones.filmes.com.filmes.injector.modules.ActivityModule;
+import diones.filmes.com.filmes.model.entities.Filme;
 import diones.filmes.com.filmes.mvp.presenters.FilmePresenter;
 import diones.filmes.com.filmes.mvp.views.FilmesView;
-import diones.filmes.com.filmes.views.fragments.LancamentoFragment;
+import diones.filmes.com.filmes.views.adapter.FilmesListAdapter;
+import diones.filmes.com.filmes.views.fragments.PopularFragment;
 import diones.filmes.com.filmes.R;
 
-public class FilmeActivity extends AppCompatActivity implements FilmesView{
+public class MainActivity extends AppCompatActivity implements FilmesView{
 
     @Bind(R.id.drawer_layout)     DrawerLayout mDrawerLayout;
     @Bind(R.id.toolbar)           Toolbar mToolbar;
-    @Bind(R.id.viewpager)         ViewPager mViewPager;
     @Bind(R.id.nav_view)          NavigationView mNavigationView;
-    @Bind(R.id.fab)               FloatingActionButton mFloatingActionButton;
 
     @Inject
     FilmePresenter mFilmePresenter;
+
+    private FilmesListAdapter mFilmeListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,20 +53,10 @@ public class FilmeActivity extends AppCompatActivity implements FilmesView{
         initUi();
         initializeToolbar();
         initializeNavigationView();
-        initializeTabLayout();
         //initializeRecyclerView();
         initializeDependencyInjector();
         initializePresenter();
 
-    }
-
-    private void initializeTabLayout() {
-
-        if (mViewPager != null)
-            setupViewPager(mViewPager);
-
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(mViewPager);
     }
 
     private void initializeNavigationView() {
@@ -115,21 +108,41 @@ public class FilmeActivity extends AppCompatActivity implements FilmesView{
         return super.onOptionsItemSelected(item);
     }
 
-    private void setupViewPager(ViewPager viewPager) {
-        Adapter adapter = new Adapter(getSupportFragmentManager());
-        adapter.addFragment(new LancamentoFragment(), "Category 1");
-        adapter.addFragment(new LancamentoFragment(), "Category 2");
-        adapter.addFragment(new LancamentoFragment(), "Category 3");
-        viewPager.setAdapter(adapter);
-    }
-
     private void setupDrawerContent(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(
                 menuItem -> {
-                    menuItem.setChecked(true);
-                    mDrawerLayout.closeDrawers();
+                    selectDrawerItem(menuItem);
                     return true;
                 });
+    }
+
+    public void selectDrawerItem(MenuItem menuItem) {
+        Fragment fragment = null;
+
+        Class fragmentClass;
+        switch(menuItem.getItemId()) {
+            case R.id.nav_movie:
+                fragmentClass = PopularFragment.class;
+                break;
+            case R.id.nav_series:
+                fragmentClass = PopularFragment.class;
+            default:
+                fragmentClass = PopularFragment.class;
+        }
+
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.frameLayoutContent, fragment).commit();
+
+        // Highlight the selected item, update the title, and close the drawer
+        menuItem.setChecked(true);
+        setTitle(menuItem.getTitle());
+        mDrawerLayout.closeDrawers();
     }
 
     @Override
@@ -149,35 +162,13 @@ public class FilmeActivity extends AppCompatActivity implements FilmesView{
 
     @Override
     public void showWelcomeMessage(String message) {
-        Snackbar.make(mFloatingActionButton, message, Snackbar.LENGTH_LONG).show();
+    //    Snackbar.make(mFloatingActionButton, message, Snackbar.LENGTH_LONG).show();
     }
 
-    static class Adapter extends FragmentPagerAdapter {
-        private final List<Fragment> mFragments = new ArrayList<>();
-        private final List<String> mFragmentTitles = new ArrayList<>();
-
-        public Adapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        public void addFragment(Fragment fragment, String title) {
-            mFragments.add(fragment);
-            mFragmentTitles.add(title);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragments.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragments.size();
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mFragmentTitles.get(position);
-        }
+    @Override
+    public void bindFilmeList(List<Filme> filmes) {
+        Toast.makeText(getApplicationContext(), filmes.toString(),Toast.LENGTH_LONG).show();
+        mFilmeListAdapter = new FilmesListAdapter(filmes, this);
     }
+
 }

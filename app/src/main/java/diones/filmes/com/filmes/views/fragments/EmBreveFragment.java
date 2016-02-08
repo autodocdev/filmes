@@ -1,4 +1,3 @@
-
 package diones.filmes.com.filmes.views.fragments;
 
 import android.os.Bundle;
@@ -10,11 +9,14 @@ import android.view.ViewGroup;
 
 import diones.filmes.com.filmes.R;
 
-public class LancamentoFragment extends Fragment {
+
+public class EmBreveFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_lancamento, container, false);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_popular, container, false);
+
+        return view;
     }
 }
