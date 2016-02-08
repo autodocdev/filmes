@@ -5,13 +5,13 @@ import java.util.List;
 import javax.inject.Inject;
 
 import diones.filmes.com.filmes.BuildConfig;
-import diones.filmes.com.filmes.model.entities.Filme;
+import diones.filmes.com.filmes.model.entities.Movie;
 import diones.filmes.com.filmes.model.repository.Repository;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class GetMoviesUseCase implements Usecase<List<Filme>> {
+public class GetMoviesUseCase implements Usecase<List<Movie>> {
 
     public final static int CHARACTERS_LIMIT = 20;
 
@@ -24,8 +24,8 @@ public class GetMoviesUseCase implements Usecase<List<Filme>> {
     }
 
     @Override
-    public Observable<List<Filme>> execute() {
-        return mRepository.getMovies(BuildConfig.FILME_PUBLIC_KEY)
+    public Observable<List<Movie>> execute() {
+        return mRepository.getMovies(BuildConfig.MOVIE_PUBLIC_KEY)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread());
     }

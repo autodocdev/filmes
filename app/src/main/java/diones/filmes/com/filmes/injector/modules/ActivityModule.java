@@ -18,7 +18,7 @@ public class ActivityModule {
 
     @Provides
     @Activity
-    Context provideAcitivtyContext() {
+    Context provideActivtyContext() {
         return  mContext;
     }
 }

@@ -7,7 +7,7 @@ import javax.inject.Inject;
 
 import diones.filmes.com.filmes.domain.GetMoviesUseCase;
 import diones.filmes.com.filmes.model.entities.Movie;
-import diones.filmes.com.filmes.mvp.views.FilmesView;
+import diones.filmes.com.filmes.mvp.views.MovieView;
 import diones.filmes.com.filmes.mvp.views.View;
 import rx.Subscription;
 
@@ -18,7 +18,7 @@ public class MoviePresenter implements Presenter {
     private Subscription mFilmesSubscription;
 
     private List<Movie> mMovies;
-    private FilmesView mFilmeView;
+    private MovieView mFilmeView;
 
     @Inject
     public MoviePresenter(GetMoviesUseCase filmesUseCase){
@@ -44,7 +44,7 @@ public class MoviePresenter implements Presenter {
 
     @Override
     public void attachView(View v) {
-        mFilmeView = (FilmesView) v;
+        mFilmeView = (MovieView) v;
     }
 
     @Override

@@ -3,21 +3,21 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_home"
+            android:id="@+id/nav_movie"
             android:icon="@drawable/ic_dashboard"
-            android:title="Home" />
+            android:title="@string/label_movies" />
         <item
-            android:id="@+id/nav_messages"
+            android:id="@+id/nav_series"
             android:icon="@drawable/ic_event"
-            android:title="Messages" />
+            android:title="@string/label_series" />
         <item
-            android:id="@+id/nav_friends"
+            android:id="@+id/nav_tv"
             android:icon="@drawable/ic_headset"
-            android:title="Friends" />
+            android:title="@string/label_tv" />
         <item
-            android:id="@+id/nav_discussion"
+            android:id="@+id/nav_people"
             android:icon="@drawable/ic_forum"
-            android:title="Discussion" />
+            android:title="@string/label_people" />
     </group>
 
     <item android:title="Sub items">

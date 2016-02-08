@@ -13,13 +13,12 @@ android {
 
     defaultConfig {
         applicationId       cfg.package
-        minSdkVersion       cfg.compileVersion
+        minSdkVersion       cfg.minSdk
         targetSdkVersion    cfg.targetSdk
         versionCode         cfg.version_code
         versionName         cfg.version_name
 
-        buildConfigField "String", "MARVEL_PUBLIC_KEY", "\"${marvel_public_key}\""
-        buildConfigField "String", "MARVEL_PRIVATE_KEY", "\"${marvel_private_key}\""
+        buildConfigField "String", "MOVIE_PUBLIC_KEY", "\"${movie_public_key}\""
     }
 
     compileOptions {
@@ -40,9 +39,10 @@ dependencies {
     testCompile 'junit:junit:4.12'
 
     // Square
-    compile "com.squareup.retrofit:retrofit:${libs.retrofit}"
-    compile "com.squareup.retrofit:converter-gson:${libs.retrofit}"
-    compile "com.squareup.retrofit:adapter-rxjava:${libs.retrofit}"
+    compile "com.squareup.retrofit2:retrofit:${libs.retrofit}"
+    compile "com.squareup.retrofit2:converter-gson:${libs.retrofit}"
+    compile "com.squareup.retrofit2:adapter-rxjava:${libs.retrofit}"
+    compile "com.squareup.okhttp3:logging-interceptor:${libs.okhttp}"
 
     // ReactiveX
     compile "io.reactivex:rxjava:${libs.rxjava}"

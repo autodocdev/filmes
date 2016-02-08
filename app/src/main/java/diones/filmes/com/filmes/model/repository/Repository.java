@@ -1,7 +1,12 @@
 package diones.filmes.com.filmes.model.repository;
 
-/**
- * Created by diones_xxx on 04/02/16.
- */
-public class Repository {
+import java.util.List;
+
+import diones.filmes.com.filmes.model.entities.Movie;
+import rx.Observable;
+
+public interface Repository {
+
+    Observable<List<Movie>> getMovies (String apiKey);
+
 }

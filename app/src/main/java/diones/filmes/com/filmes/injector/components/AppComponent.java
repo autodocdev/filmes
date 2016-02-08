@@ -3,12 +3,13 @@ package diones.filmes.com.filmes.injector.components;
 import javax.inject.Singleton;
 
 import dagger.Component;
-import diones.filmes.com.filmes.FilmesApplication;
+import diones.filmes.com.filmes.MoviesApplication;
 import diones.filmes.com.filmes.injector.AppModule;
+import diones.filmes.com.filmes.model.repository.Repository;
 
 @Singleton
 @Component(modules = AppModule.class)
 public interface AppComponent {
-    FilmesApplication app();
-    //Repository dataRepository();
+    MoviesApplication app();
+    Repository dataRepository();
 }

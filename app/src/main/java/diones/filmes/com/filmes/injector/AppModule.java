@@ -4,24 +4,26 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import diones.filmes.com.filmes.FilmesApplication;
+import diones.filmes.com.filmes.MoviesApplication;
+import diones.filmes.com.filmes.model.repository.Repository;
+import diones.filmes.com.filmes.model.rest.RestDataSource;
 
 @Module
 public class AppModule {
 
-    private final FilmesApplication mFilmesApplication;
+    private final MoviesApplication mMoviesApplication;
 
-    public AppModule(FilmesApplication filmesApplication) {
+    public AppModule(MoviesApplication moviesApplication) {
 
-        this.mFilmesApplication = filmesApplication;
+        this.mMoviesApplication = moviesApplication;
     }
 
     @Provides
     @Singleton
-    FilmesApplication provideFilmesApplicationContext () { return mFilmesApplication; }
+    MoviesApplication provideFilmesApplicationContext () { return mMoviesApplication; }
 
-    /*@Provides
+    @Provides
     @Singleton
     Repository provideDataRepository (RestDataSource restDataSource) { return restDataSource; }
-    */
+
 }

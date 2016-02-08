@@ -16,6 +16,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Conteudo dos Recente..."/>
+        android:text="Conteudo dos Em Breve..."/>
 
 </android.support.design.widget.CoordinatorLayout>
