@@ -1,6 +1,7 @@
 package diones.filmes.com.filmes.views.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -20,15 +21,20 @@ import butterknife.ButterKnife;
 import diones.filmes.com.filmes.R;
 import diones.filmes.com.filmes.model.entities.Movie;
 import diones.filmes.com.filmes.model.rest.MovieApi;
+import diones.filmes.com.filmes.utils.Utils;
+import diones.filmes.com.filmes.views.RecyclerClickListener;
+import diones.filmes.com.filmes.views.activities.DetailMovieActivity;
 
 public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.MovieViewHolder> {
 
     private final String NOT_AVAILABLE_URL = "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg";
     private final List<Movie> mMovies;
+    private final RecyclerClickListener mRecyclerClickListener;
     private Context mContext;
 
-    public MoviesListAdapter(List<Movie> movies, Context context) {
+    public MoviesListAdapter(List<Movie> movies, Context context, RecyclerClickListener recyclerClickListener) {
         mMovies = movies;
+        mRecyclerClickListener = recyclerClickListener;
         mContext = context;
     }
 
@@ -37,7 +43,7 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Mo
         View rootView = LayoutInflater.from(mContext).inflate(
                 R.layout.item_movie, parent, false);
 
-            return new MovieViewHolder(rootView);
+            return new MovieViewHolder(rootView, mRecyclerClickListener);
     }
 
     @Override
@@ -56,10 +62,10 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Mo
         @Bind(R.id.item_movie_poster)        ImageView movieThumbImageView;
         @BindColor(R.color.colorAccent)   int mColorAccent;
 
-        public MovieViewHolder(View itemView) {
+        public MovieViewHolder(View itemView, final RecyclerClickListener recyclerClickListener) {
             super(itemView);
-
             ButterKnife.bind(this, itemView);
+            bindListener(itemView, recyclerClickListener);
         }
 
         public void bindAvenger(Movie movie) {
@@ -72,12 +78,23 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Mo
 
             } else {
                 Glide.with(mContext)
-                        .load(movie.getPoster_path())
-                        .crossFade().centerCrop()
+                        .load(Utils.getImageUrl(movie.getPoster_path()))
+                        .crossFade()
                         .into(movieThumbImageView);
 
-                Log.d("IMAGEM", movie.getPoster_path());
+                Log.d("IMAGEM", Utils.getImageUrl(movie.getPoster_path()));
             }
+
+            /*itemView.setOnClickListener(v -> {
+                Context context = v.getContext();
+                Intent intent = new Intent(context, DetailMovieActivity.class);
+                context.startActivity(intent);
+            });*/
+        }
+
+        private void bindListener(View itemView, final RecyclerClickListener recyclerClickListener) {
+            itemView.setOnClickListener(v ->
+                    recyclerClickListener.onElementClick(getPosition(), movieTitleTextView, movieThumbImageView));
         }
     }
 }

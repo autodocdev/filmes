@@ -1,11 +1,13 @@
 package diones.filmes.com.filmes.mvp.presenters;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import diones.filmes.com.filmes.domain.GetMoviesUseCase;
+import diones.filmes.com.filmes.domain.GetMoviesUsecase;
 import diones.filmes.com.filmes.model.entities.Movie;
 import diones.filmes.com.filmes.mvp.views.MovieView;
 import diones.filmes.com.filmes.mvp.views.View;
@@ -13,15 +15,15 @@ import rx.Subscription;
 
 public class MoviePresenter implements Presenter {
 
-    private final GetMoviesUseCase mFilmesUseCase;
+    private final GetMoviesUsecase mFilmesUseCase;
     private boolean mIsTheFilmeResquestRunning;
     private Subscription mFilmesSubscription;
 
     private List<Movie> mMovies;
-    private MovieView mFilmeView;
+    private MovieView mMovieView;
 
     @Inject
-    public MoviePresenter(GetMoviesUseCase filmesUseCase){
+    public MoviePresenter(GetMoviesUsecase filmesUseCase){
         mFilmesUseCase = filmesUseCase;
         mMovies = new ArrayList<>();
     }
@@ -44,13 +46,12 @@ public class MoviePresenter implements Presenter {
 
     @Override
     public void attachView(View v) {
-        mFilmeView = (MovieView) v;
+        mMovieView = (MovieView) v;
     }
 
     @Override
     public void onCreate() {
         askForFilmes();
-        mFilmeView.showWelcomeMessage("App Iniciado");
     }
 
     private void askForFilmes() {
@@ -58,11 +59,18 @@ public class MoviePresenter implements Presenter {
 
         mFilmesSubscription = mFilmesUseCase.execute()
                 .subscribe(filmes -> {
+                    Log.d("FILMES LOADED", filmes.toString());
                     mMovies.addAll(filmes);
-                    mFilmeView.bindFilmeList(mMovies);
+                    mMovieView.bindFilmeList(mMovies);
                     mIsTheFilmeResquestRunning = false;
                 }, error -> {
 
                 });
+    }
+
+    public void onElementClick(int position) {
+        int characterId = Integer.parseInt(mMovies.get(position).getId());
+        String originalTitle = mMovies.get(position).getOriginal_title();
+        mMovieView.showDetailScreen(originalTitle, characterId);
     }
 }

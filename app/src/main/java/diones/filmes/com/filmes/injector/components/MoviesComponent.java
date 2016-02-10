@@ -7,13 +7,14 @@ import diones.filmes.com.filmes.injector.Activity;
 import diones.filmes.com.filmes.injector.modules.ActivityModule;
 import diones.filmes.com.filmes.views.activities.MainActivity;
 import diones.filmes.com.filmes.views.fragments.MovieFragment;
+import diones.filmes.com.filmes.views.fragments.PopularFragment;
 
 @Activity
 @Component(dependencies = AppComponent.class, modules = {ActivityModule.class})
 public interface MoviesComponent extends ActivityComponent {
 
     void inject (MainActivity activity);
-    void inject (MovieFragment fragment);
+    void inject (PopularFragment fragment);
 
     Context activityContext();
 

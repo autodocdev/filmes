@@ -13,9 +13,10 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Conteudo dos Em Breve..."/>
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/recyclerViewMovies"
+        />
 
 </android.support.design.widget.CoordinatorLayout>

@@ -11,7 +11,7 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class GetMoviesUseCase implements Usecase<List<Movie>> {
+public class GetMoviesUsecase implements Usecase<List<Movie>> {
 
     public final static int CHARACTERS_LIMIT = 20;
 
@@ -19,7 +19,7 @@ public class GetMoviesUseCase implements Usecase<List<Movie>> {
     private int offSet = CHARACTERS_LIMIT;
 
     @Inject
-    public GetMoviesUseCase(Repository repository) {
+    public GetMoviesUsecase(Repository repository) {
         mRepository = repository;
     }
 

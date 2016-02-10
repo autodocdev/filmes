@@ -9,4 +9,5 @@ public interface Repository {
 
     Observable<List<Movie>> getMovies (String apiKey);
 
+    Observable<Movie> getMovie(int mMovieId, String apiKey);
 }

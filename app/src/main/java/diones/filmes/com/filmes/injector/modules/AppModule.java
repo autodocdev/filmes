@@ -1,5 +1,6 @@
-package diones.filmes.com.filmes.injector;
+package diones.filmes.com.filmes.injector.modules;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -7,6 +8,9 @@ import dagger.Provides;
 import diones.filmes.com.filmes.MoviesApplication;
 import diones.filmes.com.filmes.model.repository.Repository;
 import diones.filmes.com.filmes.model.rest.RestDataSource;
+import rx.Scheduler;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 @Module
 public class AppModule {
@@ -25,5 +29,15 @@ public class AppModule {
     @Provides
     @Singleton
     Repository provideDataRepository (RestDataSource restDataSource) { return restDataSource; }
+
+    @Provides @Named("executor_thread")
+    Scheduler provideExecutorThread() {
+        return Schedulers.newThread();
+    }
+
+    @Provides @Named("ui_thread")
+    Scheduler provideUiThread() {
+        return AndroidSchedulers.mainThread();
+    }
 
 }

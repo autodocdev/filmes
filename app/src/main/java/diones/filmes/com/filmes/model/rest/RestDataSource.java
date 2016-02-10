@@ -2,8 +2,13 @@ package diones.filmes.com.filmes.model.rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -22,6 +27,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
+import rx.functions.Func1;
 
 public class RestDataSource implements Repository {
 
@@ -62,5 +68,10 @@ public class RestDataSource implements Repository {
                     boolean serverError = throwable.getMessage().equals(HttpErrors.SERVER_ERROR);
                     return Observable.error((serverError) ? new ServerErrorException() : new UknownErrorException());
                 });
+    }
+
+    @Override
+    public Observable<Movie> getMovie(int mMovieId, String apiKey) {
+        return mMovieApi.getMovieById(mMovieId, apiKey);
     }
 }

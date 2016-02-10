@@ -2,7 +2,7 @@ package diones.filmes.com.filmes;
 
 import android.app.Application;
 
-import diones.filmes.com.filmes.injector.AppModule;
+import diones.filmes.com.filmes.injector.modules.AppModule;
 import diones.filmes.com.filmes.injector.components.AppComponent;
 import diones.filmes.com.filmes.injector.components.DaggerAppComponent;
 
