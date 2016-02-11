@@ -53,16 +53,14 @@ public class MovieDetailPresenter implements Presenter{
         mMovieId = movieId;
     }
 
-    public void initializePresenter(int characterId, String originalTitle) {
+    public void initializePresenter(int characterId) {
         mMovieId = characterId;
-        mOriginalTitle = originalTitle;
     }
 
     public void askForCharacterDetails() {
         mMovieSubscription = mGetMovieInformationUsecase.execute()
                 .subscribe(movie -> {
-                    Log.d("FILME ID", movie.toString());
-                    mMovieDetailView.bindCharacter(movie);
+                    mMovieDetailView.bindMovie(movie);
                 }, error -> {
 
                 });

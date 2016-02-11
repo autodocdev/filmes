@@ -93,7 +93,7 @@ public class PopularFragment extends Fragment implements MovieView{
     }
 
     @Override
-    public void showDetailScreen(String originalTitle, int characterId) {
-        DetailMovieActivity.start(getContext(), originalTitle, characterId);
+    public void showDetailScreen(int characterId) {
+        DetailMovieActivity.start(getContext(), characterId);
     }
 }

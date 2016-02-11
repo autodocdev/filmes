@@ -14,7 +14,4 @@ import rx.Scheduler;
 public interface AppComponent {
     MoviesApplication app();
     Repository dataRepository();
-
-    @Named("ui_thread") Scheduler uiThread();
-    @Named("executor_thread") Scheduler executorThread();
 }

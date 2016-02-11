@@ -20,10 +20,8 @@ import butterknife.BindColor;
 import butterknife.ButterKnife;
 import diones.filmes.com.filmes.R;
 import diones.filmes.com.filmes.model.entities.Movie;
-import diones.filmes.com.filmes.model.rest.MovieApi;
 import diones.filmes.com.filmes.utils.Utils;
 import diones.filmes.com.filmes.views.RecyclerClickListener;
-import diones.filmes.com.filmes.views.activities.DetailMovieActivity;
 
 public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.MovieViewHolder> {
 
@@ -59,8 +57,8 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Mo
     public class MovieViewHolder extends RecyclerView.ViewHolder {
 
         @Bind(R.id.item_movie_title)        TextView movieTitleTextView;
-        @Bind(R.id.item_movie_poster)        ImageView movieThumbImageView;
-        @BindColor(R.color.colorAccent)   int mColorAccent;
+        @Bind(R.id.item_movie_poster)       ImageView movieThumbImageView;
+        @BindColor(R.color.colorAccent)     int mColorAccent;
 
         public MovieViewHolder(View itemView, final RecyclerClickListener recyclerClickListener) {
             super(itemView);
@@ -81,15 +79,7 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Mo
                         .load(Utils.getImageUrl(movie.getPoster_path()))
                         .crossFade()
                         .into(movieThumbImageView);
-
-                Log.d("IMAGEM", Utils.getImageUrl(movie.getPoster_path()));
             }
-
-            /*itemView.setOnClickListener(v -> {
-                Context context = v.getContext();
-                Intent intent = new Intent(context, DetailMovieActivity.class);
-                context.startActivity(intent);
-            });*/
         }
 
         private void bindListener(View itemView, final RecyclerClickListener recyclerClickListener) {

@@ -14,6 +14,6 @@ public interface MovieView extends View {
 
     void bindFilmeList(List<Movie> movies);
 
-    void showDetailScreen(String characterName, int characterId);
+    void showDetailScreen(int characterId);
 
 }

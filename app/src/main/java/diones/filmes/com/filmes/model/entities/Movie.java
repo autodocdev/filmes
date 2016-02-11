@@ -82,4 +82,11 @@ public class Movie {
         return movieReady;
     }
 
+    public String getOverview() {
+        return overview;
+    }
+
+    public void setOverview(String overview) {
+        this.overview = overview;
+    }
 }

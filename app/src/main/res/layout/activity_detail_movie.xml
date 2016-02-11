@@ -25,7 +25,7 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <ImageView
-                android:id="@+id/image"
+                android:id="@+id/imageMovie"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/paris"
@@ -65,6 +65,7 @@
                 android:layout_marginBottom="@dimen/md_keylines" />
 
             <TextView
+                android:id="@+id/overview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/detail_desc" />
@@ -73,15 +74,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="?attr/colorAccent"
-                android:text="Location"
+                android:text="Rate"
                 android:textSize="@dimen/article_titles"
                 android:layout_marginBottom="@dimen/md_keylines"
                 android:layout_marginTop="@dimen/md_keylines" />
 
-            <TextView
+            <RatingBar
+                style="?android:attr/ratingBarStyleSmall"
+                android:id="@+id/ratingMovie"
+                android:rating="3.5"
+                android:stepSize="0.5"
+                android:numStars="10"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/detail_location" />
+                android:layout_height="wrap_content"/>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>

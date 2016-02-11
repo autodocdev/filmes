@@ -72,6 +72,10 @@ public class RestDataSource implements Repository {
 
     @Override
     public Observable<Movie> getMovie(int mMovieId, String apiKey) {
-        return mMovieApi.getMovieById(mMovieId, apiKey);
+        return mMovieApi.getMovieById(mMovieId, apiKey)
+                .onErrorResumeNext(throwable -> {
+                    boolean serverError = throwable.getMessage().equals(HttpErrors.SERVER_ERROR);
+                    return Observable.error((serverError) ? new ServerErrorException() : new UknownErrorException());
+                });
     }
 }

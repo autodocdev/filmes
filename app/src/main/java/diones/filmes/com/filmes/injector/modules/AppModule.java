@@ -30,14 +30,4 @@ public class AppModule {
     @Singleton
     Repository provideDataRepository (RestDataSource restDataSource) { return restDataSource; }
 
-    @Provides @Named("executor_thread")
-    Scheduler provideExecutorThread() {
-        return Schedulers.newThread();
-    }
-
-    @Provides @Named("ui_thread")
-    Scheduler provideUiThread() {
-        return AndroidSchedulers.mainThread();
-    }
-
 }

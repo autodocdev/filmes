@@ -70,7 +70,6 @@ public class MoviePresenter implements Presenter {
 
     public void onElementClick(int position) {
         int characterId = Integer.parseInt(mMovies.get(position).getId());
-        String originalTitle = mMovies.get(position).getOriginal_title();
-        mMovieView.showDetailScreen(originalTitle, characterId);
+        mMovieView.showDetailScreen(characterId);
     }
 }
