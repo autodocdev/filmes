@@ -4,6 +4,7 @@ Essa aplicação é uma base para um padrão de desenvolvimento Android utilizan
 
 ### Libs ###
 
+* Material Design
 * ButterKnife
 * Retrofit 2
 * Dagger 2
