@@ -7,24 +7,23 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import diones.filmes.com.filmes.domain.GetMoviesUsecase;
+import diones.filmes.com.filmes.domain.PopularMoviesUsecase;
 import diones.filmes.com.filmes.model.entities.Movie;
 import diones.filmes.com.filmes.mvp.views.MovieView;
 import diones.filmes.com.filmes.mvp.views.View;
 import rx.Subscription;
 
-public class MoviePresenter implements Presenter {
+public class MoviePopularPresenter implements Presenter {
 
-    private final GetMoviesUsecase mFilmesUseCase;
-    private boolean mIsTheFilmeResquestRunning;
+    private final PopularMoviesUsecase mMoviesUseCase;
     private Subscription mFilmesSubscription;
 
     private List<Movie> mMovies;
     private MovieView mMovieView;
 
     @Inject
-    public MoviePresenter(GetMoviesUsecase filmesUseCase){
-        mFilmesUseCase = filmesUseCase;
+    public MoviePopularPresenter(PopularMoviesUsecase moviesUseCase){
+        mMoviesUseCase = moviesUseCase;
         mMovies = new ArrayList<>();
     }
 
@@ -35,13 +34,12 @@ public class MoviePresenter implements Presenter {
 
     @Override
     public void onStop() {
-
+        mFilmesSubscription.unsubscribe();
     }
 
     @Override
     public void onPause() {
-        mFilmesSubscription.unsubscribe();
-        mIsTheFilmeResquestRunning = false;
+
     }
 
     @Override
@@ -51,18 +49,17 @@ public class MoviePresenter implements Presenter {
 
     @Override
     public void onCreate() {
-        askForFilmes();
+        askForPopular();
+
     }
 
-    private void askForFilmes() {
-        mIsTheFilmeResquestRunning = true;
-
-        mFilmesSubscription = mFilmesUseCase.execute()
-                .subscribe(filmes -> {
-                    Log.d("FILMES LOADED", filmes.toString());
-                    mMovies.addAll(filmes);
-                    mMovieView.bindFilmeList(mMovies);
-                    mIsTheFilmeResquestRunning = false;
+    private void askForPopular() {
+        Log.d("FILMES POPULAR PEDIDO", "PEDINDO FILMES>>>>");
+        mFilmesSubscription = mMoviesUseCase.execute()
+                .subscribe(movies -> {
+                    Log.d("FILMES POPULAR LOADED", movies+"");
+                    mMovies.addAll(movies);
+                    mMovieView.bindMovieList(mMovies);
                 }, error -> {
 
                 });

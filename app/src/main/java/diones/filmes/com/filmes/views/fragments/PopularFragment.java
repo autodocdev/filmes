@@ -5,9 +5,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -20,7 +23,7 @@ import diones.filmes.com.filmes.R;
 import diones.filmes.com.filmes.injector.components.DaggerMoviesComponent;
 import diones.filmes.com.filmes.injector.modules.ActivityModule;
 import diones.filmes.com.filmes.model.entities.Movie;
-import diones.filmes.com.filmes.mvp.presenters.MoviePresenter;
+import diones.filmes.com.filmes.mvp.presenters.MoviePopularPresenter;
 import diones.filmes.com.filmes.mvp.views.MovieView;
 import diones.filmes.com.filmes.views.activities.DetailMovieActivity;
 import diones.filmes.com.filmes.views.adapter.MoviesListAdapter;
@@ -28,9 +31,9 @@ import diones.filmes.com.filmes.views.adapter.MoviesListAdapter;
 
 public class PopularFragment extends Fragment implements MovieView{
 
-    @Bind(R.id.recyclerViewMovies)      RecyclerView mRecyclerViewMovies;
+    @Bind(R.id.recyclerViewMoviesPopular)      RecyclerView mRecyclerViewMovies;
 
-    @Inject MoviePresenter mMoviePresenter;
+    @Inject MoviePopularPresenter mMoviePresenter;
     private MoviesListAdapter mMovieListAdapter;
 
     @Nullable
@@ -40,10 +43,16 @@ public class PopularFragment extends Fragment implements MovieView{
 
         initUi(view);
         initializeDependencyInjector();
-        initializeRecyclerView();
         initializePresenter();
+        initializeRecyclerView();
 
         return view;
+    }
+
+    @Override
+    public void onStop() {
+        mMoviePresenter.onStop();
+        super.onStop();
     }
 
     private void initUi(View view) {
@@ -85,10 +94,8 @@ public class PopularFragment extends Fragment implements MovieView{
     }
 
     @Override
-    public void bindFilmeList(List<Movie> movies) {
-        mMovieListAdapter = new MoviesListAdapter(movies, getContext(), (position, sharedView, characterImageView) -> {
-            mMoviePresenter.onElementClick(position);
-        });
+    public void bindMovieList(List<Movie> movies) {
+        mMovieListAdapter = new MoviesListAdapter(movies, getActivity(), (position, sharedView, characterImageView) -> mMoviePresenter.onElementClick(position));
         mRecyclerViewMovies.setAdapter(mMovieListAdapter);
     }
 

@@ -57,10 +57,10 @@ public class MovieFragment extends Fragment {
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        MovieAdapter adapter = new MovieAdapter(getActivity().getSupportFragmentManager());
+        MovieAdapter adapter = new MovieAdapter(getChildFragmentManager());
         adapter.addFragment(new PopularFragment(), "Popular");
-        adapter.addFragment(new RecenteFragment(), "Recente");
         adapter.addFragment(new EmBreveFragment(), "Em Breve");
+        adapter.addFragment(new RecenteFragment(), "Recente");
         viewPager.setAdapter(adapter);
     }
 

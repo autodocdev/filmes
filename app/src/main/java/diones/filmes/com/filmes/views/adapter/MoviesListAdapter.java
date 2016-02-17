@@ -69,7 +69,7 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Mo
         public void bindAvenger(Movie movie) {
             movieTitleTextView.setText(movie.getOriginal_title());
 
-            if (movie.getPoster_path().equals(NOT_AVAILABLE_URL)) {
+            if (movie.getPoster_path() == null) {
                 ColorDrawable colorDrawable = new ColorDrawable(mColorAccent);
                 movieThumbImageView.setDrawingCacheEnabled(true);
                 movieThumbImageView.setImageDrawable(colorDrawable);

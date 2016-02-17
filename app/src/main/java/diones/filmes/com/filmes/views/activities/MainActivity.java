@@ -8,26 +8,15 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
-
-import java.util.List;
-
-import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import diones.filmes.com.filmes.MoviesApplication;
 import diones.filmes.com.filmes.injector.components.DaggerMoviesComponent;
 import diones.filmes.com.filmes.injector.modules.ActivityModule;
-import diones.filmes.com.filmes.model.entities.Movie;
-import diones.filmes.com.filmes.mvp.presenters.MoviePresenter;
-import diones.filmes.com.filmes.mvp.views.MovieView;
-import diones.filmes.com.filmes.views.adapter.MoviesListAdapter;
 import diones.filmes.com.filmes.views.fragments.MovieFragment;
 import diones.filmes.com.filmes.R;
 
@@ -42,10 +31,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         initUi();
+        initializeFirstFragment();
         initializeToolbar();
         initializeNavigationView();
         initializeDependencyInjector();
 
+    }
+
+    private void initializeFirstFragment() {
+        FragmentTransaction fragmentManager = getSupportFragmentManager().beginTransaction();
+        fragmentManager.replace(R.id.frameLayoutContent, new MovieFragment()).commit();
     }
 
     private void initializeNavigationView() {
@@ -107,8 +102,6 @@ public class MainActivity extends AppCompatActivity {
             case R.id.nav_movie:
                 fragment = new MovieFragment();
                 break;
-            case R.id.nav_series:
-                fragment = new MovieFragment();
             default:
                 fragment = new MovieFragment();
         }

@@ -12,7 +12,7 @@ public interface MovieView extends View {
 
     void showUknownErrorMessage();
 
-    void bindFilmeList(List<Movie> movies);
+    void bindMovieList(List<Movie> movies);
 
     void showDetailScreen(int characterId);
 

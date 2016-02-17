@@ -13,6 +13,4 @@ public interface MovieInformationComponent extends ActivityComponent{
 
     void inject (DetailMovieActivity detailActivity);
 
-    MovieDetailsUsecase getCharacterInformationUsecase();
-
 }

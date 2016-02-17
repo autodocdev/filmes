@@ -2,19 +2,14 @@ package diones.filmes.com.filmes.model.rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 
-import java.lang.reflect.Type;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import diones.filmes.com.filmes.model.entities.Movie;
-import diones.filmes.com.filmes.model.repository.Repository;
+import diones.filmes.com.filmes.model.repository.MovieRepository;
 import diones.filmes.com.filmes.model.rest.exceptions.ServerErrorException;
 import diones.filmes.com.filmes.model.rest.exceptions.UknownErrorException;
 import diones.filmes.com.filmes.model.rest.interceptors.MovieSigningInterceptor;
@@ -27,12 +22,10 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
-import rx.functions.Func1;
 
-public class RestDataSource implements Repository {
+public class RestDataSource implements MovieRepository {
 
     private final MovieApi mMovieApi;
-    public final static int MAX_ATTEMPS = 3;
 
     @Inject
     public RestDataSource() {
@@ -62,8 +55,26 @@ public class RestDataSource implements Repository {
     }
 
     @Override
-    public Observable<List<Movie>> getMovies(String apiKey) {
+    public Observable<List<Movie>> getPopularMovies(String apiKey) {
         return mMovieApi.getPopularMovies(apiKey)
+                .onErrorResumeNext(throwable -> {
+                    boolean serverError = throwable.getMessage().equals(HttpErrors.SERVER_ERROR);
+                    return Observable.error((serverError) ? new ServerErrorException() : new UknownErrorException());
+                });
+    }
+
+    @Override
+    public Observable<Movie> getRecenteMovies(String apiKey) {
+        return mMovieApi.getRecenteMovies(apiKey)
+                .onErrorResumeNext(throwable -> {
+                    boolean serverError = throwable.getMessage().equals(HttpErrors.SERVER_ERROR);
+                    return Observable.error((serverError) ? new ServerErrorException() : new UknownErrorException());
+                });
+    }
+
+    @Override
+    public Observable<List<Movie>> getEmBreveMovies(String apiKey) {
+        return mMovieApi.getEmBreveMovies(apiKey)
                 .onErrorResumeNext(throwable -> {
                     boolean serverError = throwable.getMessage().equals(HttpErrors.SERVER_ERROR);
                     return Observable.error((serverError) ? new ServerErrorException() : new UknownErrorException());
