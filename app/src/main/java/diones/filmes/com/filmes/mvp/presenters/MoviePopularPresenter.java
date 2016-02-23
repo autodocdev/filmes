@@ -1,6 +1,7 @@
 package diones.filmes.com.filmes.mvp.presenters;
 
 import android.util.Log;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,8 +66,8 @@ public class MoviePopularPresenter implements Presenter {
                 });
     }
 
-    public void onElementClick(int position) {
-        int characterId = Integer.parseInt(mMovies.get(position).getId());
-        mMovieView.showDetailScreen(characterId);
+    public void onElementClick(int position, ImageView imageViewMovie) {
+        //int characterId = Integer.parseInt(mMovies.get(position).getId());
+        mMovieView.showDetailScreen(mMovies.get(position), imageViewMovie);
     }
 }

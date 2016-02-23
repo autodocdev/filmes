@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import java.util.List;
 
@@ -21,7 +22,6 @@ import diones.filmes.com.filmes.injector.components.DaggerMoviesComponent;
 import diones.filmes.com.filmes.injector.modules.ActivityModule;
 import diones.filmes.com.filmes.model.entities.Movie;
 import diones.filmes.com.filmes.mvp.presenters.MovieEmBrevePresenter;
-import diones.filmes.com.filmes.mvp.presenters.MoviePopularPresenter;
 import diones.filmes.com.filmes.mvp.views.MovieView;
 import diones.filmes.com.filmes.views.activities.DetailMovieActivity;
 import diones.filmes.com.filmes.views.adapter.MoviesListAdapter;
@@ -93,14 +93,14 @@ public class EmBreveFragment extends Fragment implements MovieView{
 
     @Override
     public void bindMovieList(List<Movie> movies) {
-        mMovieListAdapter = new MoviesListAdapter(movies, getContext(), (position, sharedView, characterImageView) -> {
-            mMoviePresenter.onElementClick(position);
+        mMovieListAdapter = new MoviesListAdapter(movies, getContext(), (position, sharedView, imageViewMovie) -> {
+            mMoviePresenter.onElementClick(position, imageViewMovie);
         });
         mRecyclerViewMovies.setAdapter(mMovieListAdapter);
     }
 
     @Override
-    public void showDetailScreen(int characterId) {
-        DetailMovieActivity.start(getContext(), characterId);
+    public void showDetailScreen(Movie movie, ImageView imageViewMovie) {
+        DetailMovieActivity.start(getContext(), movie, imageViewMovie);
     }
 }

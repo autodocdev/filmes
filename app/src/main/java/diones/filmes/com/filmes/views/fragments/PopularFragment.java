@@ -5,12 +5,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.ImageView;
 
 import java.util.List;
 
@@ -95,12 +93,12 @@ public class PopularFragment extends Fragment implements MovieView{
 
     @Override
     public void bindMovieList(List<Movie> movies) {
-        mMovieListAdapter = new MoviesListAdapter(movies, getActivity(), (position, sharedView, characterImageView) -> mMoviePresenter.onElementClick(position));
+        mMovieListAdapter = new MoviesListAdapter(movies, getActivity(), (position, sharedView, imageViewMovie) -> mMoviePresenter.onElementClick(position, imageViewMovie));
         mRecyclerViewMovies.setAdapter(mMovieListAdapter);
     }
 
     @Override
-    public void showDetailScreen(int characterId) {
-        DetailMovieActivity.start(getContext(), characterId);
+    public void showDetailScreen(Movie movie, ImageView imageViewMovie) {
+        DetailMovieActivity.start(getContext(), movie, imageViewMovie);
     }
 }

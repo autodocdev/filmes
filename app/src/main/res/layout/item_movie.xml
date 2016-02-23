@@ -17,6 +17,7 @@ android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
     <ImageView
         android:id="@+id/item_movie_poster"
         android:layout_width="match_parent"
+        android:transitionName="poster"
         android:layout_height="@dimen/card_image_height"
         android:scaleType="centerCrop"
         android:src="@drawable/paris" />

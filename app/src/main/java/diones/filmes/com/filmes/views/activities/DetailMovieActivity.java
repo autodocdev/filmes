@@ -1,11 +1,16 @@
 package diones.filmes.com.filmes.views.activities;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -31,6 +36,7 @@ import diones.filmes.com.filmes.utils.Utils;
 public class DetailMovieActivity extends AppCompatActivity implements MovieDetailView {
 
     public static final String EXTRA_MOVIE_ID           = "movie.id";
+    public static final String EXTRA_MOVIE_IMAGE        = "movie.image";
     @BindInt(R.integer.duration_medium)                 int mAnimMediumDuration;
     @BindInt(R.integer.duration_huge)                   int mAnimHugeDuration;
     @BindColor(R.color.colorPrimaryDark)                int mColorPrimaryDark;
@@ -46,10 +52,29 @@ public class DetailMovieActivity extends AppCompatActivity implements MovieDetai
         super.onCreate(savedInstanceState);
 
         initUi();
+        initializeSharedImage();
         initializeDependencyInjector();
         initializeToolbar();
         initializeBinding();
         initializePresenter();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                supportFinishAfterTransition();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void initializeSharedImage() {
+        String imagePoster = getIntent().getStringExtra(EXTRA_MOVIE_IMAGE);
+        Glide.with(this)
+                .load(Utils.getImageUrl(imagePoster))
+                .crossFade()
+                .into(mImageMovie);
     }
 
     private void initializeDependencyInjector() {
@@ -87,10 +112,13 @@ public class DetailMovieActivity extends AppCompatActivity implements MovieDetai
         mMovieDetailPresenter.onCreate();
     }
 
-    public static void start(Context context, int movieId) {
+    public static void start(Context context, Movie movie, ImageView imageViewMovie) {
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, imageViewMovie, "poster");
+
         Intent movieDetailItent = new Intent(context, DetailMovieActivity.class);
-        movieDetailItent.putExtra(EXTRA_MOVIE_ID, movieId);
-        context.startActivity(movieDetailItent);
+        movieDetailItent.putExtra(EXTRA_MOVIE_ID, movie.getId());
+        movieDetailItent.putExtra(EXTRA_MOVIE_IMAGE, movie.getPoster_path());
+        ActivityCompat.startActivity((Activity) context, movieDetailItent, options.toBundle());
     }
 
     @Override
@@ -104,11 +132,6 @@ public class DetailMovieActivity extends AppCompatActivity implements MovieDetai
         collapsingToolbar.setTitle(movie.getOriginal_title());
         mOverview.setText(movie.getOverview());
         mRatingMovie.setRating(Float.parseFloat(movie.getVote_average()));
-
-        Glide.with(this)
-                .load(Utils.getImageUrl(movie.getPoster_path()))
-                .crossFade()
-                .into(mImageMovie);
 
     }
 }

@@ -52,7 +52,7 @@ public class RestDataSource implements MovieRepository {
                 .build();
 
         mMovieApi =  movieApiAdapter.create(MovieApi.class);
-    } 
+    }
 
     @Override
     public Observable<List<Movie>> getPopularMovies(String apiKey) {
