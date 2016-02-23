@@ -82,12 +82,12 @@ public class DetailMovieActivity extends AppCompatActivity implements MovieDetai
     private void initializeDependencyInjector() {
         MoviesApplication avengersApplication = (MoviesApplication) getApplication();
 
-        int avengerId = getIntent().getIntExtra(EXTRA_MOVIE_ID, -1);
+        int movieId = getIntent().getIntExtra(EXTRA_MOVIE_ID, -1);
 
         DaggerMovieInformationComponent.builder()
                 .activityModule(new ActivityModule(this))
                 .appComponent(avengersApplication.getAppComponent())
-                .movieInformationModule(new MovieInformationModule(avengerId))
+                .movieInformationModule(new MovieInformationModule(movieId))
                 .build().inject(this);
     }
 
@@ -118,7 +118,7 @@ public class DetailMovieActivity extends AppCompatActivity implements MovieDetai
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, imageViewMovie, "poster");
 
         Intent movieDetailItent = new Intent(context, DetailMovieActivity.class);
-        movieDetailItent.putExtra(EXTRA_MOVIE_ID, movie.getId());
+        movieDetailItent.putExtra(EXTRA_MOVIE_ID, Integer.parseInt(movie.getId()));
         movieDetailItent.putExtra(EXTRA_MOVIE_IMAGE, movie.getPoster_path());
         ActivityCompat.startActivity((Activity) context, movieDetailItent, options.toBundle());
     }

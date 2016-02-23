@@ -15,10 +15,9 @@ public class MovieDetailsUsecase implements Usecase <Movie>{
     private final MovieRepository mMovieRepository;
 
     @Inject
-    public MovieDetailsUsecase(int characterId,
-                               MovieRepository movieRepository) {
+    public MovieDetailsUsecase(int movieId, MovieRepository movieRepository) {
 
-        mMovieId = characterId;
+        mMovieId = movieId;
         mMovieRepository = movieRepository;
     }
 
