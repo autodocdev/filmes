@@ -7,20 +7,14 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.List;
-
-import javax.inject.Inject;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import diones.filmes.com.filmes.R;
-import diones.filmes.com.filmes.views.adapter.MovieAdapter;
+import diones.filmes.com.filmes.views.adapter.MoviePageAdapter;
 
 public class MovieFragment extends Fragment {
 
@@ -57,7 +51,7 @@ public class MovieFragment extends Fragment {
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        MovieAdapter adapter = new MovieAdapter(getChildFragmentManager());
+        MoviePageAdapter adapter = new MoviePageAdapter(getChildFragmentManager());
         adapter.addFragment(new PopularFragment(), "Popular");
         adapter.addFragment(new EmBreveFragment(), "Em Breve");
         adapter.addFragment(new RecenteFragment(), "Recente");

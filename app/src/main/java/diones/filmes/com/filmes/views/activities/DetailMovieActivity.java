@@ -16,6 +16,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import javax.inject.Inject;
 
@@ -73,6 +74,7 @@ public class DetailMovieActivity extends AppCompatActivity implements MovieDetai
         String imagePoster = getIntent().getStringExtra(EXTRA_MOVIE_IMAGE);
         Glide.with(this)
                 .load(Utils.getImageUrl(imagePoster))
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE) 
                 .crossFade()
                 .into(mImageMovie);
     }
