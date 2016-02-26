@@ -1,5 +1,7 @@
 package diones.filmes.com.filmes.views.activities;
 
+import android.content.Intent;
+import android.preference.PreferenceActivity;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -96,18 +98,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void selectDrawerItem(MenuItem menuItem) {
-        Fragment fragment = null;
+
+        Intent intent;
+        FragmentTransaction fragmentManager;
 
         switch(menuItem.getItemId()) {
             case R.id.nav_movie:
-                fragment = new MovieFragment();
+                fragmentManager = getSupportFragmentManager().beginTransaction();
+                fragmentManager.replace(R.id.frameLayoutContent, new MovieFragment()).commit();
                 break;
+            case R.id.nav_settings:
+                intent = new Intent(this, PreferencesActivity.class);
+                startActivity(intent);
+
             default:
-                fragment = new MovieFragment();
+                fragmentManager = getSupportFragmentManager().beginTransaction();
+                fragmentManager.replace(R.id.frameLayoutContent, new MovieFragment()).commit();
         }
 
-        FragmentTransaction fragmentManager = getSupportFragmentManager().beginTransaction();
-        fragmentManager.replace(R.id.frameLayoutContent, fragment).commit();
 
         menuItem.setChecked(true);
         setTitle(menuItem.getTitle());

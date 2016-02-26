@@ -5,7 +5,7 @@
         <item
             android:id="@+id/nav_movie"
             android:checked="true"
-            android:icon="@drawable/ic_dashboard"
+            android:icon="@drawable/ic_movie_black_24dp"
             android:title="@string/label_movies" />
         <item
             android:id="@+id/nav_series"
@@ -21,14 +21,19 @@
             android:title="@string/label_people" />
     </group>
 
-    <item android:title="Sub items">
+    <item
+        android:title="@string/label_mais">
         <menu>
-            <item
-                android:icon="@drawable/ic_dashboard"
-                android:title="Sub item 1" />
-            <item
-                android:icon="@drawable/ic_forum"
-                android:title="Sub item 2" />
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_settings"
+                    android:icon="@drawable/ic_settings_black_24dp"
+                    android:title="@string/label_settings" />
+                <item
+                    android:id="@+id/nav_help"
+                    android:icon="@drawable/ic_help_circle_black_24dp"
+                    android:title="@string/label_ajuda" />
+            </group>
         </menu>
     </item>
 
