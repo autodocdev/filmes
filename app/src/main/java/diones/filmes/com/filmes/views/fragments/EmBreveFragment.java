@@ -25,6 +25,7 @@ import diones.filmes.com.filmes.mvp.presenters.MovieEmBrevePresenter;
 import diones.filmes.com.filmes.mvp.views.MovieView;
 import diones.filmes.com.filmes.views.activities.DetailMovieActivity;
 import diones.filmes.com.filmes.views.adapter.MoviesListAdapter;
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 
 
 public class EmBreveFragment extends Fragment implements MovieView{
@@ -96,7 +97,7 @@ public class EmBreveFragment extends Fragment implements MovieView{
         mMovieListAdapter = new MoviesListAdapter(movies, getContext(), (position, sharedView, imageViewMovie) -> {
             mMoviePresenter.onElementClick(position, imageViewMovie);
         });
-        mRecyclerViewMovies.setAdapter(mMovieListAdapter);
+        mRecyclerViewMovies.setAdapter(new ScaleInAnimationAdapter(mMovieListAdapter));
     }
 
     @Override
