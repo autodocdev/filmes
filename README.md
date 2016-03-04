@@ -19,8 +19,8 @@ Essa aplicação é uma base para um padrão de desenvolvimento Android utilizan
 * Android Support Repository v23.1.1
 
 ### Screenshots ###
-![drawer.png](https://bitbucket.org/repo/KxXXox/images/1018828837-drawer.png)
+![drawer.png](https://github.com/dionesxxx/filmes-1/blob/master/art/drawer.png)
 
-![recycler.png](https://bitbucket.org/repo/KxXXox/images/1576657752-recycler.png)
+![recycler.png](https://github.com/dionesxxx/filmes-1/blob/master/art/reclycler.png)
 
-![detail.png](https://bitbucket.org/repo/KxXXox/images/2581564126-detail.png)
+![detail.png](https://github.com/dionesxxx/filmes-1/blob/master/art/detail.png)
