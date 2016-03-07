@@ -23,7 +23,7 @@
     <string name="label_search">Procurar</string>
 
 
-    <string name="label_preference_name">Seu Nome</string>
+    <string name="label_preference_name">Nome</string>
     <string name="label_preference_name_summary">Por favor informe seu nome de usuário</string>
     <string name="label_preference_application">Notificações</string>
     <string name="label_preference_application_summary">Essa opção se for checada permitirá o recebimento de notificações</string>
