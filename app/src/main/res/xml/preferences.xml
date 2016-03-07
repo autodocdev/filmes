@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <EditTextPreference android:title="@string/label_preference_name"
+    <EditTextPreference android:title="@string/preference_name"
         android:key="username"
-        android:summary="@string/label_preference_name_summary"/>
+        android:summary="@string/preference_name_summary"/>
 
-    <CheckBoxPreference android:title="@string/label_preference_application"
+    <CheckBoxPreference android:title="@string/preference_application"
         android:defaultValue="false"
-        android:summary="@string/label_preference_application_summary"
+        android:summary="@string/preference_application_summary"
         android:key="applicationUpdates" />
     <ListPreference android:title="Download Details"
         android:summary="Select the kind of data that you would like to download"
