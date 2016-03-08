@@ -33,7 +33,7 @@ public class PreferencesActivity extends AppCompatActivity {
     }
 
     private void initializeToolbar() {
-        mToolbar.setTitle(getResources().getString(R.string.label_settings));
+        mToolbar.setTitle(getResources().getString(R.string.movie_settings));
 
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
