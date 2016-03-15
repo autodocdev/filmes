@@ -54,6 +54,12 @@ public class PreferencesActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        NavUtils.navigateUpFromSameTask(this);
+    }
+
     public static class PreferencesFragment extends PreferenceFragment
     {
         @Override
