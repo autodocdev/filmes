@@ -11,6 +11,7 @@ Essa aplicação é uma base para um padrão de desenvolvimento Android utilizan
 * RxJava
 * Glide
 * Retrolambda
+* Image Circle
 
 ### Pré Requisitos ###
 
