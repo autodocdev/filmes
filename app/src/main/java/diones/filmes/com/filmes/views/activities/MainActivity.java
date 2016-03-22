@@ -1,11 +1,13 @@
 package diones.filmes.com.filmes.views.activities;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -25,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     @Bind(R.id.toolbar)             Toolbar mToolbar;
     @Bind(R.id.drawer_layout)       DrawerLayout mDrawerLayout;
     @Bind(R.id.nav_view)            NavigationView mNavigationView;
+    private ActionBarDrawerToggle mActionBarDrawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,15 +41,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void initUi() {
+        setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
+    }
+
     private void initializeFirstFragment() {
         FragmentTransaction fragmentManager = getSupportFragmentManager().beginTransaction();
         fragmentManager.replace(R.id.frameLayoutContent, new MovieFragment()).commit();
-    }
-
-    private void initializeNavigationView() {
-        if (mNavigationView != null) {
-            setupDrawerContent(mNavigationView);
-        }
     }
 
     private void initializeToolbar() {
@@ -55,6 +57,15 @@ public class MainActivity extends AppCompatActivity {
         final ActionBar ab = getSupportActionBar();
         ab.setHomeAsUpIndicator(R.drawable.ic_menu);
         ab.setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void initializeNavigationView() {
+        if (mNavigationView != null) {
+            setupDrawerContent(mNavigationView);
+
+            mActionBarDrawerToggle = setupDrawerToggle();
+            mDrawerLayout.addDrawerListener(mActionBarDrawerToggle);
+        }
     }
 
     private void initializeDependencyInjector() {
@@ -66,9 +77,8 @@ public class MainActivity extends AppCompatActivity {
                 .build().inject(this);
     }
 
-    private void initUi() {
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+    private ActionBarDrawerToggle setupDrawerToggle() {
+        return new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open,  R.string.drawer_close);
     }
 
     @Override
@@ -123,6 +133,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
+        mActionBarDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mActionBarDrawerToggle.onConfigurationChanged(newConfig);
     }
 
 }

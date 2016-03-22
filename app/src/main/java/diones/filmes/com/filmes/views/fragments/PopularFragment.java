@@ -25,9 +25,7 @@ import diones.filmes.com.filmes.mvp.presenters.MoviePopularPresenter;
 import diones.filmes.com.filmes.mvp.views.MovieView;
 import diones.filmes.com.filmes.views.activities.DetailMovieActivity;
 import diones.filmes.com.filmes.views.adapter.MoviesListAdapter;
-import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
-import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 
 
 public class PopularFragment extends Fragment implements MovieView{
@@ -96,7 +94,7 @@ public class PopularFragment extends Fragment implements MovieView{
 
     @Override
     public void bindMovieList(List<Movie> movies) {
-        mMovieListAdapter = new MoviesListAdapter(movies, getActivity(), (position, sharedView, imageViewMovie) -> mMoviePresenter.onElementClick(position, imageViewMovie));
+        mMovieListAdapter = new MoviesListAdapter(movies, getActivity(), (position, sharedView, imageView) -> mMoviePresenter.onElementClick(position, imageView));
         mRecyclerViewMovies.setAdapter(new ScaleInAnimationAdapter(mMovieListAdapter));
     }
 

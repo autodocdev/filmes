@@ -94,9 +94,7 @@ public class EmBreveFragment extends Fragment implements MovieView{
 
     @Override
     public void bindMovieList(List<Movie> movies) {
-        mMovieListAdapter = new MoviesListAdapter(movies, getContext(), (position, sharedView, imageViewMovie) -> {
-            mMoviePresenter.onElementClick(position, imageViewMovie);
-        });
+        mMovieListAdapter = new MoviesListAdapter(movies, getContext(), (position, sharedView, imageViewMovie) -> mMoviePresenter.onElementClick(position, imageViewMovie));
         mRecyclerViewMovies.setAdapter(new ScaleInAnimationAdapter(mMovieListAdapter));
     }
 
