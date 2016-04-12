@@ -20,7 +20,6 @@ public class MovieFragment extends Fragment {
 
     @Bind(R.id.viewpagerMovie)     ViewPager mViewPager;
     @Bind(R.id.tabsMovie)          TabLayout mTabLayout;
-    @Bind(R.id.fabMovie)           FloatingActionButton mFloatingActionButton;
 
     @Nullable
     @Override

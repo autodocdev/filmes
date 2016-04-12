@@ -55,8 +55,8 @@ public class RestDataSource implements MovieRepository {
     }
 
     @Override
-    public Observable<List<Movie>> getPopularMovies(String apiKey) {
-        return mMovieApi.getPopularMovies(apiKey)
+    public Observable<List<Movie>> getPopularMovies(String apiKey, int page) {
+        return mMovieApi.getPopularMovies(apiKey, page)
                 .onErrorResumeNext(throwable -> {
                     boolean serverError = throwable.getMessage().equals(HttpErrors.SERVER_ERROR);
                     return Observable.error((serverError) ? new ServerErrorException() : new UknownErrorException());
@@ -73,8 +73,8 @@ public class RestDataSource implements MovieRepository {
     }
 
     @Override
-    public Observable<List<Movie>> getEmBreveMovies(String apiKey) {
-        return mMovieApi.getEmBreveMovies(apiKey)
+    public Observable<List<Movie>> getEmBreveMovies(String apiKey, int page) {
+        return mMovieApi.getEmBreveMovies(apiKey, page)
                 .onErrorResumeNext(throwable -> {
                     boolean serverError = throwable.getMessage().equals(HttpErrors.SERVER_ERROR);
                     return Observable.error((serverError) ? new ServerErrorException() : new UknownErrorException());
