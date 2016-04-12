@@ -2,6 +2,7 @@ package diones.filmes.com.filmes.views.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -49,9 +50,9 @@ public class EmBreveFragment extends Fragment implements MovieView{
     }
 
     @Override
-    public void onStop() {
-        mMoviePresenter.onStop();
+    public void onPause() {
         super.onStop();
+        mMoviePresenter.onPause();
     }
 
     private void initUi(View view) {
@@ -61,6 +62,7 @@ public class EmBreveFragment extends Fragment implements MovieView{
     private void initializeRecyclerView() {
         mRecyclerViewMovies.setHasFixedSize(true);
         mRecyclerViewMovies.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerViewMovies.addOnScrollListener(mOnScrollListener);
     }
 
     private void initializePresenter() {
@@ -88,8 +90,10 @@ public class EmBreveFragment extends Fragment implements MovieView{
     }
 
     @Override
-    public void showUknownErrorMessage() {
-
+    public void showLightError() {
+        Snackbar.make(mRecyclerViewMovies, getString(R.string.error_loading_movies), Snackbar.LENGTH_LONG)
+                .setAction(R.string.try_again, v -> mMoviePresenter.onErrorRetryRequest())
+                .show();
     }
 
     @Override
@@ -102,4 +106,23 @@ public class EmBreveFragment extends Fragment implements MovieView{
     public void showDetailScreen(Movie movie, ImageView imageViewMovie) {
         DetailMovieActivity.start(getContext(), movie, imageViewMovie);
     }
+
+    @Override
+    public void updateMoviesList(int moviesAdded) {
+        mMovieListAdapter.notifyItemRangeInserted(mMovieListAdapter.getItemCount() + moviesAdded, moviesAdded);
+    }
+
+    private RecyclerView.OnScrollListener mOnScrollListener = new RecyclerView.OnScrollListener() {
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+            int visibleItemsCount   = layoutManager.getChildCount();
+            int totalItemsCount     = layoutManager.getItemCount();
+            int firstVisibleItemPos = layoutManager.findFirstVisibleItemPosition();
+
+            if (visibleItemsCount + firstVisibleItemPos >= totalItemsCount) {
+                mMoviePresenter.onListEndReached();
+            }
+        }
+    };
 }

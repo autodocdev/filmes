@@ -17,6 +17,7 @@ import rx.Subscription;
 public class MoviePopularPresenter implements Presenter {
 
     private final PopularMoviesUsecase mMoviesUseCase;
+    private boolean mIsTheCharacterRequestRunning;
     private Subscription mFilmesSubscription;
 
     private List<Movie> mMovies;
@@ -35,12 +36,13 @@ public class MoviePopularPresenter implements Presenter {
 
     @Override
     public void onStop() {
-        mFilmesSubscription.unsubscribe();
+
     }
 
     @Override
     public void onPause() {
-
+        mFilmesSubscription.unsubscribe();
+        mIsTheCharacterRequestRunning = false;
     }
 
     @Override
@@ -54,20 +56,54 @@ public class MoviePopularPresenter implements Presenter {
 
     }
 
-    private void askForPopular() {
-        Log.d("FILMES POPULAR PEDIDO", "PEDINDO FILMES>>>>");
-        mFilmesSubscription = mMoviesUseCase.execute()
-                .subscribe(movies -> {
-                    Log.d("FILMES POPULAR LOADED", movies+"");
-                    mMovies.addAll(movies);
-                    mMovieView.bindMovieList(mMovies);
-                }, error -> {
+    public void onListEndReached() {
+        if (!mIsTheCharacterRequestRunning) askForNewPopular();
+    }
 
-                });
+    private void askForPopular() {
+        mIsTheCharacterRequestRunning = true;
+        mFilmesSubscription = mMoviesUseCase.execute()
+                .subscribe(this::onMoviesReceived, this::showErrorView);
+    }
+
+    private void askForNewPopular() {
+        mFilmesSubscription = mMoviesUseCase.execute()
+                .subscribe(this::onNewMoviesReceived, this::onNewMoviesError);
+    }
+
+    public void onMoviesReceived(List<Movie> movies) {
+        mMovies.addAll(movies);
+        mMovieView.bindMovieList(mMovies);
+        mIsTheCharacterRequestRunning = false;
+    }
+
+    public void showErrorView(Throwable error) {
+
+    }
+
+    public void onNewMoviesReceived(List<Movie> movies) {
+        mMovies.addAll(movies);
+        mMovieView.updateMoviesList(PopularMoviesUsecase.DEFAULT_MOVIES_LIMIT);
+        mIsTheCharacterRequestRunning = false;
+    }
+
+    private void onNewMoviesError(Throwable error) {
+        showGenericError();
+        mIsTheCharacterRequestRunning = false;
+    }
+
+    private void showGenericError() {
+        mMovieView.showLightError();
+    }
+
+    public void onErrorRetryRequest() {
+        if (mMovies.isEmpty())
+            askForPopular();
+        else
+            askForNewPopular();
     }
 
     public void onElementClick(int position, ImageView imageViewMovie) {
-        //int characterId = Integer.parseInt(mMovies.get(position).getId());
         mMovieView.showDetailScreen(mMovies.get(position), imageViewMovie);
     }
 }

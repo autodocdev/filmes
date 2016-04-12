@@ -57,6 +57,7 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Mo
 
     public class MovieViewHolder extends RecyclerView.ViewHolder {
 
+        @Bind(R.id.item_movie_release_date) TextView movieReleaseDateTextView;
         @Bind(R.id.item_movie_title)        TextView movieTitleTextView;
         @Bind(R.id.item_movie_poster)       ImageView movieThumbImageView;
         @BindColor(R.color.colorAccent)     int mColorAccent;
@@ -69,6 +70,7 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Mo
 
         public void bindAvenger(Movie movie) {
             movieTitleTextView.setText(movie.getOriginal_title());
+            movieReleaseDateTextView.setText(Utils.getDateFormat(movie.getRelease_date()));
 
             if (movie.getPoster_path() == null) {
                 ColorDrawable colorDrawable = new ColorDrawable(mColorAccent);

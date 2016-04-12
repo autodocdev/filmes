@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Filmes</string>
+    <string name="try_again">Tente novamente</string>
 
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
@@ -8,6 +9,7 @@
     <string name="error.network.image_not_found">Imagem não encontrada</string>
     <string name="error.network.uknownhost">Não foi possível se conectar com a API de Filmes</string>
     <string name="error.network.filme_server">Filmes API Server falhou</string>
+    <string name="error.loading.movies">Ocorreu um erro ao tentar carregar os filmes</string>
 
     <string name="movie_filme">Filmes</string>
     <string name="movie_series">Séries</string>

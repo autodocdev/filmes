@@ -7,11 +7,11 @@ import rx.Observable;
 
 public interface MovieRepository {
 
-    Observable<List<Movie>> getPopularMovies (String apiKey);
+    Observable<List<Movie>> getPopularMovies (String apiKey, int page);
 
     Observable<Movie> getRecenteMovies (String apiKey);
 
-    Observable<List<Movie>> getEmBreveMovies (String apiKey);
+    Observable<List<Movie>> getEmBreveMovies (String apiKey, int page);
 
     Observable<Movie> getMovie(int mMovieId, String apiKey);
 }

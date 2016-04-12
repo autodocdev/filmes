@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import diones.filmes.com.filmes.domain.PopularMoviesUsecase;
 import diones.filmes.com.filmes.domain.RecenteEmBreveUsecase;
 import diones.filmes.com.filmes.model.entities.Movie;
 import diones.filmes.com.filmes.mvp.views.MovieView;
@@ -17,6 +18,7 @@ import rx.Subscription;
 public class MovieEmBrevePresenter implements Presenter {
 
     private final RecenteEmBreveUsecase mMoviesUseCase;
+    private boolean mIsTheCharacterRequestRunning;
     private Subscription mFilmesSubscription;
 
     private List<Movie> mMovies;
@@ -35,12 +37,13 @@ public class MovieEmBrevePresenter implements Presenter {
 
     @Override
     public void onStop() {
-        mFilmesSubscription.unsubscribe();
+
     }
 
     @Override
     public void onPause() {
-
+        mFilmesSubscription.unsubscribe();
+        mIsTheCharacterRequestRunning = false;
     }
 
     @Override
@@ -54,19 +57,53 @@ public class MovieEmBrevePresenter implements Presenter {
 
     }
 
+    public void onListEndReached() {
+        if (!mIsTheCharacterRequestRunning) askForNewEmBreve();
+    }
+
     private void askForEmBreve() {
         mFilmesSubscription = mMoviesUseCase.execute()
-                .subscribe(movies -> {
-                    Log.d("FILMES EM BREVE LOADED", movies.toString());
-                    mMovies.addAll(movies);
-                    mMovieView.bindMovieList(mMovies);
-                }, error -> {
+                .subscribe(this::onMoviesReceived, this::showErrorView);
+    }
 
-                });
+    private void askForNewEmBreve() {
+        mFilmesSubscription = mMoviesUseCase.execute()
+                .subscribe(this::onNewMoviesReceived, this::onNewMoviesError);
+    }
+
+    public void onMoviesReceived(List<Movie> movies) {
+        mMovies.addAll(movies);
+        mMovieView.bindMovieList(mMovies);
+        mIsTheCharacterRequestRunning = false;
+    }
+
+    public void showErrorView(Throwable error) {
+
+    }
+
+    public void onNewMoviesReceived(List<Movie> movies) {
+        mMovies.addAll(movies);
+        mMovieView.updateMoviesList(RecenteEmBreveUsecase.DEFAULT_MOVIES_LIMIT);
+        mIsTheCharacterRequestRunning = false;
+    }
+
+    private void onNewMoviesError(Throwable error) {
+        showGenericError();
+        mIsTheCharacterRequestRunning = false;
+    }
+
+    private void showGenericError() {
+        mMovieView.showLightError();
+    }
+
+    public void onErrorRetryRequest() {
+        if (mMovies.isEmpty())
+            askForEmBreve();
+        else
+            askForNewEmBreve();
     }
 
     public void onElementClick(int position, ImageView imageViewMovie) {
-        //int characterId = Integer.parseInt(mMovies.get(position).getId());
         mMovieView.showDetailScreen(mMovies.get(position), imageViewMovie);
     }
 }

@@ -13,10 +13,11 @@ import rx.schedulers.Schedulers;
 
 public class RecenteEmBreveUsecase implements Usecase<List<Movie>> {
 
-    public final static int CHARACTERS_LIMIT = 20;
-
+    public final static int DEFAULT_MOVIE_PAGE = 1;
+    public static final int DEFAULT_MOVIES_LIMIT = 20;
+    private int mMoviePage = DEFAULT_MOVIE_PAGE;
     private final MovieRepository mMovieRepository;
-    private int offSet = CHARACTERS_LIMIT;
+    private int mCurrentPage;
 
     @Inject
     public RecenteEmBreveUsecase(MovieRepository movieRepository) {
@@ -25,8 +26,13 @@ public class RecenteEmBreveUsecase implements Usecase<List<Movie>> {
 
     @Override
     public Observable<List<Movie>> execute() {
-        return mMovieRepository.getEmBreveMovies(BuildConfig.MOVIE_PUBLIC_KEY)
+        increaseOffset();
+        return mMovieRepository.getEmBreveMovies(BuildConfig.MOVIE_PUBLIC_KEY, mCurrentPage)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.newThread());
+    }
+
+    private void increaseOffset() {
+        mCurrentPage += mMoviePage;
     }
 }
