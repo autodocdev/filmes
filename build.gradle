@@ -1,7 +1,7 @@
 ext {
     configuration = [
             package             : "diones.filmes.com.filmes",
-            buildToolsVersion   : "23.0.1",
+            buildToolsVersion   : "23.0.3",
             compileVersion      : 23,
             minSdk              : 16,
             targetSdk           : 23,
@@ -10,8 +10,8 @@ ext {
     ]
 
     libraries = [
-            supportVersion      : "23.2.0",
-            dagger              : "2.0.2",
+            supportVersion      : "23.3.0",
+            dagger              : "2.2",
             rxjava              : "1.1.0",
             rxandroid           : "1.1.0",
             retrofit            : "2.0.0",
@@ -29,7 +29,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.5.0'
+        classpath 'com.android.tools.build:gradle:2.1.0'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         classpath 'me.tatarka:gradle-retrolambda:3.1.0'
         classpath 'com.android.databinding:dataBinder:1.0-rc1'
