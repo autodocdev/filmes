@@ -1,7 +1,6 @@
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
-apply plugin: 'com.android.databinding'
 
 def cfg = rootProject.ext.configuration
 def libs = rootProject.ext.libraries;
@@ -24,6 +23,10 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    dataBinding {
+        enabled = true
     }
 
     buildTypes {
