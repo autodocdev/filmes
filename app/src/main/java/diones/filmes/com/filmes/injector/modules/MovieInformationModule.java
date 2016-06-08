@@ -2,7 +2,7 @@ package diones.filmes.com.filmes.injector.modules;
 
 import dagger.Module;
 import dagger.Provides;
-import diones.filmes.com.filmes.domain.MovieDetailsUsecase;
+import diones.filmes.com.filmes.domain.MovieDetailUsecase;
 import diones.filmes.com.filmes.injector.Activity;
 import diones.filmes.com.filmes.model.repository.MovieRepository;
 
@@ -15,10 +15,11 @@ public class MovieInformationModule {
         mMovieId = movieId;
     }
 
-    @Provides @Activity MovieDetailsUsecase provideGetCharacterInformationUsecase (
+    @Provides @Activity
+    MovieDetailUsecase provideGetCharacterInformationUsecase (
             MovieRepository movieRepository) {
 
-        return new MovieDetailsUsecase(mMovieId, movieRepository);
+        return new MovieDetailUsecase(mMovieId, movieRepository);
     }
 
 }

@@ -9,13 +9,13 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class MovieDetailsUsecase implements Usecase <Movie>{
+public class MovieDetailUsecase implements Usecase <Movie>{
 
     private int mMovieId;
     private final MovieRepository mMovieRepository;
 
     @Inject
-    public MovieDetailsUsecase(int movieId, MovieRepository movieRepository) {
+    public MovieDetailUsecase(int movieId, MovieRepository movieRepository) {
 
         mMovieId = movieId;
         mMovieRepository = movieRepository;

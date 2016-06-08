@@ -20,9 +20,9 @@ import android.view.MenuItem;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import diones.filmes.com.filmes.MoviesApplication;
-import diones.filmes.com.filmes.injector.components.DaggerMoviesComponent;
+import diones.filmes.com.filmes.injector.components.DaggerMovieListComponent;
 import diones.filmes.com.filmes.injector.modules.ActivityModule;
-import diones.filmes.com.filmes.views.fragments.MovieFragment;
+import diones.filmes.com.filmes.views.fragments.MovieListFragment;
 import diones.filmes.com.filmes.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initializeFirstFragment() {
         FragmentTransaction fragmentManager = getSupportFragmentManager().beginTransaction();
-        fragmentManager.replace(R.id.frameLayoutContent, new MovieFragment()).commit();
+        fragmentManager.replace(R.id.frameLayoutContent, new MovieListFragment()).commit();
     }
 
     private void initializeToolbar() {
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
     private void initializeDependencyInjector() {
         MoviesApplication moviesApplication = (MoviesApplication) getApplication();
 
-        DaggerMoviesComponent.builder()
+        DaggerMovieListComponent.builder()
                 .activityModule(new ActivityModule(this))
                 .appComponent(moviesApplication.getAppComponent())
                 .build().inject(this);
@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
         switch(menuItem.getItemId()) {
             case R.id.nav_movie:
                 fragmentManager = getSupportFragmentManager().beginTransaction();
-                fragmentManager.replace(R.id.frameLayoutContent, new MovieFragment()).commit();
+                fragmentManager.replace(R.id.frameLayoutContent, new MovieListFragment()).commit();
                 break;
             case R.id.nav_settings:
                 intent = new Intent(this, PreferencesActivity.class);
@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
 
             default:
                 fragmentManager = getSupportFragmentManager().beginTransaction();
-                fragmentManager.replace(R.id.frameLayoutContent, new MovieFragment()).commit();
+                fragmentManager.replace(R.id.frameLayoutContent, new MovieListFragment()).commit();
         }
 
 

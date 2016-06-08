@@ -8,12 +8,12 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MoviePageAdapter extends FragmentStatePagerAdapter {
+public class MovieListPageAdapter extends FragmentStatePagerAdapter {
 
     private final List<Fragment> mFragments = new ArrayList<>();
     private final List<String> mFragmentTitles = new ArrayList<>();
 
-    public MoviePageAdapter(FragmentManager fm) {
+    public MovieListPageAdapter(FragmentManager fm) {
         super(fm);
     }
 

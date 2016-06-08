@@ -3,7 +3,6 @@ package diones.filmes.com.filmes.views.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -14,9 +13,9 @@ import android.view.ViewGroup;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import diones.filmes.com.filmes.R;
-import diones.filmes.com.filmes.views.adapter.MoviePageAdapter;
+import diones.filmes.com.filmes.views.adapter.MovieListPageAdapter;
 
-public class MovieFragment extends Fragment {
+public class MovieListFragment extends Fragment {
 
     @BindView(R.id.viewpagerMovie)     ViewPager mViewPager;
     @BindView(R.id.tabsMovie)          TabLayout mTabLayout;
@@ -50,10 +49,9 @@ public class MovieFragment extends Fragment {
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        MoviePageAdapter adapter = new MoviePageAdapter(getChildFragmentManager());
-        adapter.addFragment(new PopularFragment(), "Popular");
-        adapter.addFragment(new EmBreveFragment(), "Em Breve");
-        adapter.addFragment(new RecenteFragment(), "Recente");
+        MovieListPageAdapter adapter = new MovieListPageAdapter(getChildFragmentManager());
+        adapter.addFragment(new MovieListPopularFragment(), "Popular");
+        adapter.addFragment(new MovieListBreveFragment(), "Em Breve");
         viewPager.setAdapter(adapter);
     }
 

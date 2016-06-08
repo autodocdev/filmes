@@ -12,9 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,7 +30,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import diones.filmes.com.filmes.MoviesApplication;
 import diones.filmes.com.filmes.R;
-import diones.filmes.com.filmes.injector.components.DaggerMovieInformationComponent;
+import diones.filmes.com.filmes.injector.components.DaggerMovieDetailComponent;
 import diones.filmes.com.filmes.injector.modules.ActivityModule;
 import diones.filmes.com.filmes.injector.modules.MovieInformationModule;
 import diones.filmes.com.filmes.model.entities.Movie;
@@ -40,7 +38,7 @@ import diones.filmes.com.filmes.mvp.presenters.MovieDetailPresenter;
 import diones.filmes.com.filmes.mvp.views.MovieDetailView;
 import diones.filmes.com.filmes.utils.Utils;
 
-public class DetailMovieActivity extends AppCompatActivity implements MovieDetailView {
+public class MovieDetailActivity extends AppCompatActivity implements MovieDetailView {
 
     public static final String EXTRA_MOVIE_ID           = "movie.id";
     public static final String EXTRA_MOVIE_IMAGE        = "movie.image";
@@ -53,7 +51,8 @@ public class DetailMovieActivity extends AppCompatActivity implements MovieDetai
     @BindView(R.id.imageMovie)                              ImageView mImageMovie;
     @BindView(R.id.toolbar)                                 Toolbar mToolbar;
 
-    @Inject   MovieDetailPresenter mMovieDetailPresenter;
+    @Inject
+    MovieDetailPresenter mMovieDetailPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,7 +108,7 @@ public class DetailMovieActivity extends AppCompatActivity implements MovieDetai
 
         int movieId = getIntent().getIntExtra(EXTRA_MOVIE_ID, -1);
 
-        DaggerMovieInformationComponent.builder()
+        DaggerMovieDetailComponent.builder()
                 .activityModule(new ActivityModule(this))
                 .appComponent(avengersApplication.getAppComponent())
                 .movieInformationModule(new MovieInformationModule(movieId))
@@ -142,7 +141,7 @@ public class DetailMovieActivity extends AppCompatActivity implements MovieDetai
     public static void start(Context context, Movie movie, ImageView imageViewMovie) {
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, imageViewMovie, "poster");
 
-        Intent movieDetailItent = new Intent(context, DetailMovieActivity.class);
+        Intent movieDetailItent = new Intent(context, MovieDetailActivity.class);
         movieDetailItent.putExtra(EXTRA_MOVIE_ID, Integer.parseInt(movie.getId()));
         movieDetailItent.putExtra(EXTRA_MOVIE_IMAGE, movie.getPoster_path());
         ActivityCompat.startActivity((Activity) context, movieDetailItent, options.toBundle());

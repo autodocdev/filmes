@@ -1,4 +1,4 @@
-package diones.filmes.com.filmes.model.rest.interceptors;
+package diones.filmes.com.filmes.model.rest.utils.interceptors;
 
 
 import java.io.IOException;
