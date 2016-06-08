@@ -1,10 +1,8 @@
 package diones.filmes.com.filmes.views.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,14 +22,14 @@ import diones.filmes.com.filmes.model.entities.Movie;
 import diones.filmes.com.filmes.utils.Utils;
 import diones.filmes.com.filmes.views.RecyclerClickListener;
 
-public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.MovieViewHolder> {
+public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.MovieViewHolder> {
 
     private final String NOT_AVAILABLE_URL = "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg";
     private final List<Movie> mMovies;
     private final RecyclerClickListener mRecyclerClickListener;
     private Context mContext;
 
-    public MoviesListAdapter(List<Movie> movies, Context context, RecyclerClickListener recyclerClickListener) {
+    public MovieListAdapter(List<Movie> movies, Context context, RecyclerClickListener recyclerClickListener) {
         mMovies = movies;
         mRecyclerClickListener = recyclerClickListener;
         mContext = context;

@@ -12,9 +12,9 @@ import diones.filmes.com.filmes.model.entities.Movie;
 import diones.filmes.com.filmes.model.repository.MovieRepository;
 import diones.filmes.com.filmes.model.rest.exceptions.ServerErrorException;
 import diones.filmes.com.filmes.model.rest.exceptions.UknownErrorException;
-import diones.filmes.com.filmes.model.rest.interceptors.MovieSigningInterceptor;
-import diones.filmes.com.filmes.model.rest.utils.deserializers.MovieResultsDeserializer;
+import diones.filmes.com.filmes.model.rest.utils.interceptors.MovieSigningInterceptor;
 import diones.filmes.com.filmes.BuildConfig;
+import diones.filmes.com.filmes.model.rest.utils.deserializers.MovieResultsDeserializer;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import okhttp3.logging.HttpLoggingInterceptor.Level;
@@ -57,15 +57,6 @@ public class RestDataSource implements MovieRepository {
     @Override
     public Observable<List<Movie>> getPopularMovies(String apiKey, int page) {
         return mMovieApi.getPopularMovies(apiKey, page)
-                .onErrorResumeNext(throwable -> {
-                    boolean serverError = throwable.getMessage().equals(HttpErrors.SERVER_ERROR);
-                    return Observable.error((serverError) ? new ServerErrorException() : new UknownErrorException());
-                });
-    }
-
-    @Override
-    public Observable<Movie> getRecenteMovies(String apiKey) {
-        return mMovieApi.getRecenteMovies(apiKey)
                 .onErrorResumeNext(throwable -> {
                     boolean serverError = throwable.getMessage().equals(HttpErrors.SERVER_ERROR);
                     return Observable.error((serverError) ? new ServerErrorException() : new UknownErrorException());

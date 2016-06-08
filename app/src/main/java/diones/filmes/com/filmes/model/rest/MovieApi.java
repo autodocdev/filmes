@@ -18,9 +18,6 @@ public interface MovieApi {
     @GET("/3/movie/popular")
     Observable<List<Movie>> getPopularMovies (@Query("api_key") String apiKey, @Query("page") int page);
 
-    @GET("/3/movie/latest")
-    Observable<Movie> getRecenteMovies (@Query("api_key") String apiKey);
-
     @GET("/3/movie/upcoming")
     Observable<List<Movie>> getEmBreveMovies (@Query("api_key") String apiKey, @Query("page") int page);
 

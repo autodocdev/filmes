@@ -1,6 +1,5 @@
 package diones.filmes.com.filmes.mvp.presenters;
 
-import android.util.Log;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
@@ -8,24 +7,23 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import diones.filmes.com.filmes.domain.PopularMoviesUsecase;
-import diones.filmes.com.filmes.domain.RecenteEmBreveUsecase;
+import diones.filmes.com.filmes.domain.MovieListPopularUsecase;
 import diones.filmes.com.filmes.model.entities.Movie;
-import diones.filmes.com.filmes.mvp.views.MovieView;
+import diones.filmes.com.filmes.mvp.views.MovieListView;
 import diones.filmes.com.filmes.mvp.views.View;
 import rx.Subscription;
 
-public class MovieEmBrevePresenter implements Presenter {
+public class MovieListPopularPresenter implements Presenter {
 
-    private final RecenteEmBreveUsecase mMoviesUseCase;
+    private final MovieListPopularUsecase mMoviesUseCase;
     private boolean mIsTheCharacterRequestRunning;
     private Subscription mFilmesSubscription;
 
     private List<Movie> mMovies;
-    private MovieView mMovieView;
+    private MovieListView mMovieView;
 
     @Inject
-    public MovieEmBrevePresenter(RecenteEmBreveUsecase moviesUseCase){
+    public MovieListPopularPresenter(MovieListPopularUsecase moviesUseCase){
         mMoviesUseCase = moviesUseCase;
         mMovies = new ArrayList<>();
     }
@@ -48,27 +46,27 @@ public class MovieEmBrevePresenter implements Presenter {
 
     @Override
     public void attachView(View v) {
-        mMovieView = (MovieView) v;
+        mMovieView = (MovieListView) v;
     }
 
     @Override
     public void onCreate() {
-        askForEmBreve();
+        askForPopular();
 
     }
 
     public void onListEndReached() {
-        if (!mIsTheCharacterRequestRunning) askForNewEmBreve();
+        if (!mIsTheCharacterRequestRunning) askForNewPopular();
     }
 
-    private void askForEmBreve() {
+    private void askForPopular() {
         mMovieView.hideErrorView();
         mIsTheCharacterRequestRunning = true;
         mFilmesSubscription = mMoviesUseCase.execute()
                 .subscribe(this::onMoviesReceived, this::showErrorView);
     }
 
-    private void askForNewEmBreve() {
+    private void askForNewPopular() {
         mFilmesSubscription = mMoviesUseCase.execute()
                 .subscribe(this::onNewMoviesReceived, this::onNewMoviesError);
     }
@@ -85,7 +83,7 @@ public class MovieEmBrevePresenter implements Presenter {
 
     public void onNewMoviesReceived(List<Movie> movies) {
         mMovies.addAll(movies);
-        mMovieView.updateMoviesList(RecenteEmBreveUsecase.DEFAULT_MOVIES_LIMIT);
+        mMovieView.updateMoviesList(MovieListPopularUsecase.DEFAULT_MOVIES_LIMIT);
         mIsTheCharacterRequestRunning = false;
     }
 
@@ -100,9 +98,9 @@ public class MovieEmBrevePresenter implements Presenter {
 
     public void onErrorRetryRequest() {
         if (mMovies.isEmpty())
-            askForEmBreve();
+            askForPopular();
         else
-            askForNewEmBreve();
+            askForNewPopular();
     }
 
     public void onElementClick(int position, ImageView imageViewMovie) {

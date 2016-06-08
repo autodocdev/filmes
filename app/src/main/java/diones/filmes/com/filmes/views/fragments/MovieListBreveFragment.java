@@ -21,40 +21,41 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import diones.filmes.com.filmes.MoviesApplication;
 import diones.filmes.com.filmes.R;
-import diones.filmes.com.filmes.injector.components.DaggerMoviesComponent;
+import diones.filmes.com.filmes.injector.components.DaggerMovieListComponent;
 import diones.filmes.com.filmes.injector.modules.ActivityModule;
 import diones.filmes.com.filmes.model.entities.Movie;
-import diones.filmes.com.filmes.mvp.presenters.MoviePopularPresenter;
-import diones.filmes.com.filmes.mvp.views.MovieView;
-import diones.filmes.com.filmes.views.activities.DetailMovieActivity;
-import diones.filmes.com.filmes.views.adapter.MoviesListAdapter;
+import diones.filmes.com.filmes.mvp.presenters.MovieListBrevePresenter;
+import diones.filmes.com.filmes.mvp.views.MovieListView;
+import diones.filmes.com.filmes.views.activities.MovieDetailActivity;
+import diones.filmes.com.filmes.views.adapter.MovieListAdapter;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 
 
-public class PopularFragment extends Fragment implements MovieView{
+public class MovieListBreveFragment extends Fragment implements MovieListView {
 
-    @BindView(R.id.recyclerViewMoviesPopular)      RecyclerView mRecyclerViewMovies;
+    @BindView(R.id.recyclerViewMoviesEmBreve)      RecyclerView mRecyclerViewMovies;
     @BindView(R.id.movie_error_view)               View mErrorView;
 
-    @Inject MoviePopularPresenter mMoviePresenter;
-    private MoviesListAdapter mMovieListAdapter;
+    @Inject
+    MovieListBrevePresenter mMoviePresenter;
+    private MovieListAdapter mMovieListAdapter;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_popular, container, false);
+        View view = inflater.inflate(R.layout.fragment_em_breve, container, false);
 
         initUi(view);
         initializeDependencyInjector();
-        initializePresenter();
         initializeRecyclerView();
+        initializePresenter();
 
         return view;
     }
 
     @Override
     public void onPause() {
-        super.onPause();
+        super.onStop();
         mMoviePresenter.onPause();
     }
 
@@ -76,7 +77,7 @@ public class PopularFragment extends Fragment implements MovieView{
     private void initializeDependencyInjector() {
         MoviesApplication moviesApplication = (MoviesApplication) getActivity().getApplication();
 
-        DaggerMoviesComponent.builder()
+        DaggerMovieListComponent.builder()
                 .activityModule(new ActivityModule(getActivity().getApplicationContext()))
                 .appComponent(moviesApplication.getAppComponent())
                 .build().inject(this);
@@ -85,7 +86,6 @@ public class PopularFragment extends Fragment implements MovieView{
     @OnClick(R.id.view_error_retry_button) void onRetryButtonClicked(View v) {
         mMoviePresenter.onErrorRetryRequest();
     }
-
 
     @Override
     public void showConnectionErrorMessage() {
@@ -113,13 +113,13 @@ public class PopularFragment extends Fragment implements MovieView{
 
     @Override
     public void bindMovieList(List<Movie> movies) {
-        mMovieListAdapter = new MoviesListAdapter(movies, getActivity(), (position, sharedView, imageView) -> mMoviePresenter.onElementClick(position, imageView));
+        mMovieListAdapter = new MovieListAdapter(movies, getContext(), (position, sharedView, imageViewMovie) -> mMoviePresenter.onElementClick(position, imageViewMovie));
         mRecyclerViewMovies.setAdapter(new ScaleInAnimationAdapter(mMovieListAdapter));
     }
 
     @Override
     public void showDetailScreen(Movie movie, ImageView imageViewMovie) {
-        DetailMovieActivity.start(getContext(), movie, imageViewMovie);
+        MovieDetailActivity.start(getContext(), movie, imageViewMovie);
     }
 
     @Override

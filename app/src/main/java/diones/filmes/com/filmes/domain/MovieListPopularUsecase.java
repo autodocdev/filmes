@@ -9,9 +9,10 @@ import diones.filmes.com.filmes.model.entities.Movie;
 import diones.filmes.com.filmes.model.repository.MovieRepository;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
-public class RecenteEmBreveUsecase implements Usecase<List<Movie>> {
+public class MovieListPopularUsecase implements Usecase<List<Movie>> {
 
     public final static int DEFAULT_MOVIE_PAGE = 1;
     public static final int DEFAULT_MOVIES_LIMIT = 20;
@@ -20,14 +21,14 @@ public class RecenteEmBreveUsecase implements Usecase<List<Movie>> {
     private int mCurrentPage;
 
     @Inject
-    public RecenteEmBreveUsecase(MovieRepository movieRepository) {
+    public MovieListPopularUsecase(MovieRepository movieRepository) {
         mMovieRepository = movieRepository;
     }
 
     @Override
     public Observable<List<Movie>> execute() {
         increaseOffset();
-        return mMovieRepository.getEmBreveMovies(BuildConfig.MOVIE_PUBLIC_KEY, mCurrentPage)
+        return mMovieRepository.getPopularMovies(BuildConfig.MOVIE_PUBLIC_KEY, mCurrentPage)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.newThread())
                 .doOnError(throwable -> mCurrentPage -= mMoviePage);

@@ -6,7 +6,7 @@ import java.util.List;
 
 import diones.filmes.com.filmes.model.entities.Movie;
 
-public interface MovieView extends View {
+public interface MovieListView extends View {
 
     void showConnectionErrorMessage();
 

@@ -1,11 +1,8 @@
 package diones.filmes.com.filmes.mvp.presenters;
 
-import android.util.Log;
-
 import javax.inject.Inject;
 
-import diones.filmes.com.filmes.domain.MovieDetailsUsecase;
-import diones.filmes.com.filmes.model.entities.Movie;
+import diones.filmes.com.filmes.domain.MovieDetailUsecase;
 import diones.filmes.com.filmes.mvp.views.MovieDetailView;
 import diones.filmes.com.filmes.mvp.views.View;
 import rx.Subscription;
@@ -13,13 +10,13 @@ import rx.Subscription;
 public class MovieDetailPresenter implements Presenter{
 
     private MovieDetailView mMovieDetailView;
-    private final MovieDetailsUsecase mGetMovieInformationUsecase;
+    private final MovieDetailUsecase mGetMovieInformationUsecase;
     private Subscription mMovieSubscription;
     private int mMovieId;
     private String mOriginalTitle;
 
     @Inject
-    public MovieDetailPresenter(MovieDetailsUsecase getMovieInformationUsecase) {
+    public MovieDetailPresenter(MovieDetailUsecase getMovieInformationUsecase) {
         mGetMovieInformationUsecase = getMovieInformationUsecase;
     }
 
