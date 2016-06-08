@@ -29,7 +29,8 @@ public class RecenteEmBreveUsecase implements Usecase<List<Movie>> {
         increaseOffset();
         return mMovieRepository.getEmBreveMovies(BuildConfig.MOVIE_PUBLIC_KEY, mCurrentPage)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.newThread());
+                .subscribeOn(Schedulers.newThread())
+                .doOnError(throwable -> mCurrentPage -= mMoviePage);
     }
 
     private void increaseOffset() {

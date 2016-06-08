@@ -17,7 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import diones.filmes.com.filmes.MoviesApplication;
 import diones.filmes.com.filmes.injector.components.DaggerMoviesComponent;
@@ -27,9 +27,9 @@ import diones.filmes.com.filmes.R;
 
 public class MainActivity extends AppCompatActivity {
 
-    @Bind(R.id.toolbar)             Toolbar mToolbar;
-    @Bind(R.id.drawer_layout)       DrawerLayout mDrawerLayout;
-    @Bind(R.id.nav_view)            NavigationView mNavigationView;
+    @BindView(R.id.toolbar)             Toolbar mToolbar;
+    @BindView(R.id.drawer_layout)       DrawerLayout mDrawerLayout;
+    @BindView(R.id.nav_view)            NavigationView mNavigationView;
     private ActionBarDrawerToggle mActionBarDrawerToggle;
 
     @Override

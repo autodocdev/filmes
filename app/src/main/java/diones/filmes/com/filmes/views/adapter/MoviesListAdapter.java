@@ -16,8 +16,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.List;
 
-import butterknife.Bind;
 import butterknife.BindColor;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import diones.filmes.com.filmes.R;
 import diones.filmes.com.filmes.model.entities.Movie;
@@ -57,9 +57,9 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Mo
 
     public class MovieViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.item_movie_release_date) TextView movieReleaseDateTextView;
-        @Bind(R.id.item_movie_title)        TextView movieTitleTextView;
-        @Bind(R.id.item_movie_poster)       ImageView movieThumbImageView;
+        @BindView(R.id.item_movie_release_date) TextView movieReleaseDateTextView;
+        @BindView(R.id.item_movie_title)        TextView movieTitleTextView;
+        @BindView(R.id.item_movie_poster)       ImageView movieThumbImageView;
         @BindColor(R.color.colorAccent)     int mColorAccent;
 
         public MovieViewHolder(View itemView, final RecyclerClickListener recyclerClickListener) {
