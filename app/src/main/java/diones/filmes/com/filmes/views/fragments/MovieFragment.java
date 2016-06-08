@@ -11,15 +11,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import diones.filmes.com.filmes.R;
 import diones.filmes.com.filmes.views.adapter.MoviePageAdapter;
 
 public class MovieFragment extends Fragment {
 
-    @Bind(R.id.viewpagerMovie)     ViewPager mViewPager;
-    @Bind(R.id.tabsMovie)          TabLayout mTabLayout;
+    @BindView(R.id.viewpagerMovie)     ViewPager mViewPager;
+    @BindView(R.id.tabsMovie)          TabLayout mTabLayout;
 
     @Nullable
     @Override

@@ -8,13 +8,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import diones.filmes.com.filmes.R;
 
 public class PreferencesActivity extends AppCompatActivity {
     
-    @Bind(R.id.toolbar_configuracao) Toolbar mToolbar;
+    @BindView(R.id.toolbar_configuracao) Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

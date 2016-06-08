@@ -62,6 +62,8 @@ public class MovieEmBrevePresenter implements Presenter {
     }
 
     private void askForEmBreve() {
+        mMovieView.hideErrorView();
+        mIsTheCharacterRequestRunning = true;
         mFilmesSubscription = mMoviesUseCase.execute()
                 .subscribe(this::onMoviesReceived, this::showErrorView);
     }
@@ -78,7 +80,7 @@ public class MovieEmBrevePresenter implements Presenter {
     }
 
     public void showErrorView(Throwable error) {
-
+        mMovieView.showUknownErrorMessage();
     }
 
     public void onNewMoviesReceived(List<Movie> movies) {

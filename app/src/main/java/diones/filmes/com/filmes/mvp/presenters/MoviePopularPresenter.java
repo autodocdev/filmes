@@ -1,6 +1,5 @@
 package diones.filmes.com.filmes.mvp.presenters;
 
-import android.util.Log;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
@@ -61,6 +60,7 @@ public class MoviePopularPresenter implements Presenter {
     }
 
     private void askForPopular() {
+        mMovieView.hideErrorView();
         mIsTheCharacterRequestRunning = true;
         mFilmesSubscription = mMoviesUseCase.execute()
                 .subscribe(this::onMoviesReceived, this::showErrorView);
@@ -78,7 +78,7 @@ public class MoviePopularPresenter implements Presenter {
     }
 
     public void showErrorView(Throwable error) {
-
+        mMovieView.showUknownErrorMessage();
     }
 
     public void onNewMoviesReceived(List<Movie> movies) {

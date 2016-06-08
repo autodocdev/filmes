@@ -10,13 +10,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import diones.filmes.com.filmes.MoviesApplication;
 import diones.filmes.com.filmes.R;
 import diones.filmes.com.filmes.injector.components.DaggerMoviesComponent;
@@ -31,7 +33,8 @@ import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 
 public class PopularFragment extends Fragment implements MovieView{
 
-    @Bind(R.id.recyclerViewMoviesPopular)      RecyclerView mRecyclerViewMovies;
+    @BindView(R.id.recyclerViewMoviesPopular)      RecyclerView mRecyclerViewMovies;
+    @BindView(R.id.movie_error_view)               View mErrorView;
 
     @Inject MoviePopularPresenter mMoviePresenter;
     private MoviesListAdapter mMovieListAdapter;
@@ -79,6 +82,11 @@ public class PopularFragment extends Fragment implements MovieView{
                 .build().inject(this);
     }
 
+    @OnClick(R.id.view_error_retry_button) void onRetryButtonClicked(View v) {
+        mMoviePresenter.onErrorRetryRequest();
+    }
+
+
     @Override
     public void showConnectionErrorMessage() {
 
@@ -87,6 +95,13 @@ public class PopularFragment extends Fragment implements MovieView{
     @Override
     public void showServerErrorMessage() {
 
+    }
+
+    @Override
+    public void showUknownErrorMessage() {
+        TextView errorTextView = ButterKnife.findById(mErrorView, R.id.view_error_message);
+        errorTextView.setText(R.string.error_loading_movies);
+        mErrorView.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -110,6 +125,11 @@ public class PopularFragment extends Fragment implements MovieView{
     @Override
     public void updateMoviesList(int moviesAdded) {
         mMovieListAdapter.notifyItemRangeInserted(mMovieListAdapter.getItemCount() + moviesAdded, moviesAdded);
+    }
+
+    @Override
+    public void hideErrorView() {
+        mErrorView.setVisibility(View.GONE);
     }
 
     private RecyclerView.OnScrollListener mOnScrollListener = new RecyclerView.OnScrollListener() {

@@ -12,6 +12,8 @@ public interface MovieView extends View {
 
     void showServerErrorMessage();
 
+    void showUknownErrorMessage();
+
     void showLightError();
 
     void bindMovieList(List<Movie> movies);
@@ -19,4 +21,6 @@ public interface MovieView extends View {
     void showDetailScreen(Movie movie, ImageView imageViewMovie);
 
     void updateMoviesList(int moviesLimit);
+
+    void hideErrorView();
 }

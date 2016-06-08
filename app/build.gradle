@@ -1,6 +1,6 @@
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.android.application'
-apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'android-apt'
 
 def cfg = rootProject.ext.configuration
 def libs = rootProject.ext.libraries;
@@ -55,6 +55,7 @@ dependencies {
     compile "com.github.bumptech.glide:glide:${libs.glide}"
     compile "jp.wasabeef:recyclerview-animators:${libs.recycler_animators}"
     compile "com.jakewharton:butterknife:${libs.butterknife}"
+    apt "com.jakewharton:butterknife-compiler:${libs.butterknife}"
     compile "de.hdodenhof:circleimageview:${libs.circleimageview}"
 
     // Google
